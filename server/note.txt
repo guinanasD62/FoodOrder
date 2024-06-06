@@ -1,0 +1,115 @@
+user ===
+name
+gmail
+number
+address
+password
+img
+role
+   enum: [ 'admin', 'user','resto'],
+   default: 'user'
+
+menu
+restaurant
+foodname
+recipes
+price 
+quantity
+img
+
+order mixed user and menu
+
+==================
+
+admin 
+-see all user restaurant food || 
+add 
+update + delete
+
+restaurant
+-see menus 
+add 
+update + delete
+inventory
+
+user
+see food 
+add food, order page
+
+==================
+
+rule base access control || separate project?
+search debouncer
+redux thunk in nav and order page
+update password
+
+
+Login page
+Registration
+Forgot password
+
+Reset  password
+ 
+brief
+food delivery
+ 
+customers
+restoraurant admin
+admin
+ 
+app like a customer see many resto, 
+cutomer see many food itmes dishes
+click refleck detail page add more items
+go back to add or search
+ 
+Resto admin
+add dishes and recipes
+one dish like burger, image quantity
+ 
+admin 
+list all users
+ 
+ 
+redux
+typescript
+ 
+ 
+user address
+multiple delivery address
+check out page 
+success
+ 
+folder structure
+make sure if 
+portal admin ex,resto dominos multiple pizza 
+dominos menus
+adding multiple product
+ 
+if product is pizza added inventory 50, reduce
+
+3/6/24
+creating a pllain password updating api and 
+
+
+4/6/24
+api user and food not working
+
+5/6/24
+login register + forgot password
+
+///
+
+
+///////////
+npm init -y
+npm i create-next-app@latest
+
+/////////////////
+
+axios
+please create a function that get my products from my mongodb using axios , please use my express server api 
+
+this is my product page ||  api controller model route
+
+///update the UsersPage component to use Axios directly within the component to fetch users.
+please use types ts
