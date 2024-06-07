@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { MenuModel } from "../model/menu";
+import { MenuModel } from "../model/menuItem";
 
 
 // Register user
-export const addfood = async (req: Request, res: Response) => {
+export const addmenu = async (req: Request, res: Response) => {
     try {
         const { restaurant,
             foodname,

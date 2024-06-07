@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import styles from '@/ui/auth/forgot/ForgotPassword.module.css';
 
 const ForgotPasswordForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -40,48 +41,53 @@ const ForgotPasswordForm: React.FC = () => {
     };
 
     return (
-        <div className="forgot-password-form">
-            <h2>Forgot Password</h2>
-            {!emailVerified ? (
-                <form onSubmit={handleEmailSubmit}>
-                    <div>
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit">Verify Email</button>
-                </form>
-            ) : (
-                <form onSubmit={handlePasswordSubmit}>
-                    <div>
-                        <label htmlFor="new-password">New Password:</label>
-                        <input
-                            type="password"
-                            id="new-password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="confirm-password">Confirm Password:</label>
-                        <input
-                            type="password"
-                            id="confirm-password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit">Reset Password</button>
-                </form>
-            )}
-            {message && <p>{message}</p>}
+        <div className={styles.container}>
+            <div className={styles.formContainer}>
+                <h2 className={styles.header}>Forgot Password</h2>
+                {!emailVerified ? (
+                    <form onSubmit={handleEmailSubmit}>
+                        <div>
+                            <label htmlFor="email" className={styles.label}>Email:</label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className={styles.input}
+                            />
+                        </div>
+                        <button type="submit" className={styles.button}>Verify Email</button>
+                    </form>
+                ) : (
+                    <form onSubmit={handlePasswordSubmit}>
+                        <div>
+                            <label htmlFor="new-password" className={styles.label}>New Password:</label>
+                            <input
+                                type="password"
+                                id="new-password"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                required
+                                className={styles.input}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="confirm-password" className={styles.label}>Confirm Password:</label>
+                            <input
+                                type="password"
+                                id="confirm-password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                                className={styles.input}
+                            />
+                        </div>
+                        <button type="submit" className={styles.button}>Reset Password</button>
+                    </form>
+                )}
+                {message && <p className={styles.message}>{message}</p>}
+            </div>
         </div>
     );
 };

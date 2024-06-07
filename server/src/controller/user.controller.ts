@@ -53,6 +53,16 @@ export const getUser = async (req: Request, res: Response) => {
     }
 };
 
+// Get one user
+export const findById = async (id: any) => {
+    try {
+        const user = await User.findById(id);
+        return user
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 // Update user
 // export const updateUser = async (req: Request, res: Response) => {
 //     try {

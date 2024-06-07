@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import styles from '@/ui/admindashboard/admin/PerID.module.css';
 
 interface User {
     _id: string;
@@ -56,25 +57,63 @@ const SingleUserPage = ({ params }: { params: Params }) => {
     };
 
     return (
-        <div>
-            <h1>Edit User</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {user && (
-                <form onSubmit={handleSubmit}>
-                    <input type="hidden" name="id" value={user._id} />
-                    <label>Name</label>
-                    <input name="name" value={user.name} onChange={handleChange} required />
-                    <label>Email</label>
-                    <input name="email" type="email" value={user.email} onChange={handleChange} required />
-                    <label>Phone</label>
-                    <input name="phone" value={user.phone} onChange={handleChange} required />
-                    <label>Address</label>
-                    <input name="address" value={user.address} onChange={handleChange} required />
-                    <label>Role</label>
-                    <input name="role" value={user.role} onChange={handleChange} required />
-                    <button type="submit">Update</button>
-                </form>
-            )}
+        <div className={styles.container}>
+            <div className={styles.formContainer}>
+                <h1 className={styles.header}>Edit User</h1>
+                {error && <p className={styles.error}>{error}</p>}
+                {user && (
+                    <form onSubmit={handleSubmit}>
+                        <input type="hidden" name="id" value={user._id} />
+                        <label className={styles.label} htmlFor="name">Name</label>
+                        <input
+                            id="name"
+                            name="name"
+                            value={user.name}
+                            onChange={handleChange}
+                            required
+                            className={styles.input}
+                        />
+                        <label className={styles.label} htmlFor="email">Email</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={user.email}
+                            onChange={handleChange}
+                            required
+                            className={styles.input}
+                        />
+                        <label className={styles.label} htmlFor="phone">Phone</label>
+                        <input
+                            id="phone"
+                            name="phone"
+                            value={user.phone}
+                            onChange={handleChange}
+                            required
+                            className={styles.input}
+                        />
+                        <label className={styles.label} htmlFor="address">Address</label>
+                        <input
+                            id="address"
+                            name="address"
+                            value={user.address}
+                            onChange={handleChange}
+                            required
+                            className={styles.input}
+                        />
+                        <label className={styles.label} htmlFor="role">Role</label>
+                        <input
+                            id="role"
+                            name="role"
+                            value={user.role}
+                            onChange={handleChange}
+                            required
+                            className={styles.input}
+                        />
+                        <button type="submit" className={styles.button}>Update</button>
+                    </form>
+                )}
+            </div>
         </div>
     );
 }

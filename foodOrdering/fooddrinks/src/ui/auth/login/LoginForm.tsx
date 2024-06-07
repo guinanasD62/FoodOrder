@@ -21,7 +21,7 @@ const LoginForm: React.FC = () => {
             });
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token); // Store token in local storage
-                router.push('/admindashboard'); // Redirect to dashboard or another page
+                router.push('/admindashboard/admin'); // Redirect to dashboard or another page
             }
         } catch (error: any) {
             setError(error.response?.data?.message || 'Login failed');

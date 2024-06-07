@@ -38,7 +38,7 @@ add food, order page
 
 ==================
 
-rule base access control || separate project?
+role base access control || separate project?
 search debouncer
 redux thunk in nav and order page
 update password
@@ -113,3 +113,4 @@ this is my product page ||  api controller model route
 
 ///update the UsersPage component to use Axios directly within the component to fetch users.
 please use types ts
+

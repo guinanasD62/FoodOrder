@@ -31,7 +31,11 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['admin', 'user', 'restaurant'],
-        default: 'user'
+        required: true
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
     }
 }, {
     timestamps: true,

@@ -3,10 +3,12 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/user.routes";
 import menuRoutes from "./routes/menu.routes";
 import cors from 'cors';
+const connectDB = require('./config/db')
 
 const app = express();
 
-
+//Connect to database
+connectDB()
 
 // middleware
 app.use(express.json());
@@ -22,17 +24,5 @@ app.listen(3007, () => {
     console.log(`Server is running on http://localhost:3007`);
 });
 
-mongoose.connect(
-    "mongodb+srv://dianaroseguinanas:dianaroseguinanas@cluster0.hhqfg3z.mongodb.net/foodorder?retryWrites=true&w=majority&appName=Cluster0"
-)
-    .then(() => {
-        console.log("Connected to database!");
 
-        app.get('/', (req, res) => {
-            res.send("Hello from Node API Server Updated");
-        })
-    })
-    .catch(() => {
-        console.log("Connection failed!");
-    });
 
