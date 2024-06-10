@@ -53,9 +53,9 @@ const LoginForm: React.FC = () => {
                 />
                 <button type="submit">Login</button>
                 <br /> <br />
-                <Link href="/forgotPassword">Forgot Password?</Link>
+                {/* <Link href="/forgotPassword">Forgot Password?</Link>
                 <br />
-                <Link href="/resetPassword">Reset Password</Link>
+                <Link href="/resetPassword">Reset Password</Link> */}
                 <br />
                 <Link href="/register">Register</Link>
             </form>

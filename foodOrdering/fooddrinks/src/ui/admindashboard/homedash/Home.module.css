@@ -1,0 +1,89 @@
+/* Home.module.css */
+.main {
+    background-color: #fff5f5;
+    color: #900000;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* Ensure the main section takes the full viewport height */
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffebeb;
+    max-width: 1200px;
+    margin: auto;
+    height: 80vh;
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #900000;
+}
+
+.loginButton {
+    margin-top: 20px;
+}
+
+.loginLink {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: #ffffff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.loginLink:hover {
+    background-color: #e60000;
+}
+
+.menu {
+    margin-top: 40px;
+}
+
+.menuTitle {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #900000;
+}
+
+.menuItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.menuItem {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 200px;
+}
+
+.menuImage {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.menuItemName {
+    font-size: 1.2rem;
+    color: #900000;
+}
+
+.menuItemPrice {
+    font-size: 1rem;
+    color: #900000;
+}

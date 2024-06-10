@@ -135,6 +135,8 @@ userDta.role
 10/6/24
 
 debugging Auth 2 hours
+debugging admin, restaurant, menuItem
+
 
 1 Juan 3:​19, 20.
 atong bang kabalaka mas daghan atong gidala kesa atong gitugyan kang Jah

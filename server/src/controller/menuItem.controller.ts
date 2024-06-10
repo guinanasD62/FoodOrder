@@ -11,8 +11,8 @@ export const addMenu = async (req: Request, res: Response) => {
 
         // Check if the restaurant exists
         const restaurantExists = await RestaurantModel.findById(restaurant);
-        console.log("resto ----------->", restaurant);
-        console.log("restaurantExists ----------->", restaurantExists);
+        // console.log("resto ----------->", restaurant);
+        // console.log("restaurantExists ----------->", restaurantExists);
 
         if (!restaurantExists) {
             return res.status(404).json({ message: "Restaurant not found" });

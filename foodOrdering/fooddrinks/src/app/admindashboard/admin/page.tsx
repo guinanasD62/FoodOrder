@@ -15,19 +15,23 @@ interface User {
     img?: string;
 }
 
-const Admin: React.FC = () => {
+const UsersPage: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [error, setError] = useState<string>('');
     const router = useRouter();
 
-    const fetchUsers = async () => {
-        try {
-            const response = await axios.get('http://localhost:3007/getusers');
-            setUsers(response.data.data);
-        } catch (error: any) {
-            setError(error.response?.data?.message || 'Error fetching users');
-        }
-    };
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('http://localhost:3007/getusers');
+                setUsers(response.data.data);
+            } catch (error: any) {
+                setError(error.response?.data?.message || 'Error fetching users');
+            }
+        };
+
+        fetchUsers();
+    }, []);
 
     const handleDelete = async (id: string) => {
         try {
@@ -41,10 +45,6 @@ const Admin: React.FC = () => {
     const handleUpdate = (id: string) => {
         router.push(`/admindashboard/admin/${id}`);
     };
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
 
     const renderTable = (role: string) => (
         <div className={styles.tableContainer}>
@@ -84,11 +84,10 @@ const Admin: React.FC = () => {
             <h1 className={styles.header}>Admin Panel</h1>
             {error && <p className={styles.error}>{error}</p>}
             {renderTable('admin')}
-            {renderTable('restaurant')}
+            {/* {renderTable('restaurant')} */}
             {renderTable('user')}
         </div>
     );
-}
+};
 
-export default Admin;
-
+export default UsersPage;

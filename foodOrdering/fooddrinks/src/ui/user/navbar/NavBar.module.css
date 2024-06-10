@@ -1,0 +1,86 @@
+.appBar {
+    background-color: red;
+}
+
+.title {
+    flex-grow: 1;
+    font-size: 1.5em;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.container {
+    margin-top: 0px;
+    padding: 0px;
+}
+
+.containerNav {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    /* Add this line */
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: red;
+    margin: 0;
+    /* Remove margin */
+}
+
+.userTitle {
+    font-size: 30px;
+    color: #fffffa;
+}
+
+/* .conNav{
+    margin-right: 600px;
+  } */
+
+.list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Add space between list items */
+    margin: 0;
+    /* Remove margin */
+    padding: 0;
+    /* Remove padding */
+}
+
+.logout {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    background: none;
+    border: none;
+    color: white;
+}
+
+.logout:hover {
+    background-color: #2e374a;
+}
+
+.containerCustomer {
+
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    /* float: right; */
+    gap: 10px;
+    border-radius: 10px;
+    color: whitesmoke;
+    font-size: 18px;
+    /* margin: 0 10px; Adjust margin to make it horizontal */
+}
+
+.containerCustomer:hover,
+.active {
+    background-color: #2e374a;
+    color: #ffffff;
+}

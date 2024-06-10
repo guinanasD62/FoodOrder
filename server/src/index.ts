@@ -18,7 +18,11 @@ connectDB()
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(cors()); // Enable CORS for all routes
+app.use(cors({
+    origin: 'http://localhost:3000', // Adjust this if your client runs on a different port
+    optionsSuccessStatus: 200
+}));
+
 
 // routes
 app.use("/", userRoutes);
