@@ -46,13 +46,17 @@ export const auth = (roles: any = []) => {
         try {
             //This line uses jwt.verify to decode the token with a secret key (JWT_SECRET). This verifies if the token is valid.
             const decoded: any = jwt.verify(token, JWT_SECRET);
+            console.log('Decoded token--->', decoded);
 
             //It then looks up the user in the database by the ID found in the token.
             let userDta = await User.findById(decoded.id)
+            console.log('User data--->', userDta);
 
             if (roles.length && !roles.includes(userDta.role)) {
                 return res.status(403).json({ message: 'Forbidden' })
             }
+            console.log('User role authorized--->', userDta.role);
+
             next();
         } catch (error) {
 

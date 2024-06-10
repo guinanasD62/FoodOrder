@@ -5,6 +5,10 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter restaurant name"],
     },
+    email: {
+        type: String,
+        unique: true,
+    },
     address: {
         type: String,
         required: [true, "Please enter address name"],

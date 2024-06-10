@@ -6,7 +6,7 @@ import { User } from "../model/user";
 // Add restaurant
 export const addRestaurant = async (req: Request, res: Response) => {
     try {
-        const { name, address, phone, owner, menu } = req.body;
+        const { name, email, address, phone, owner, menu } = req.body;
 
         // Check if the owner exists
         const ownerExists = await User.findById(owner);
@@ -16,6 +16,7 @@ export const addRestaurant = async (req: Request, res: Response) => {
 
         const restaurant = new RestaurantModel({
             name,
+            email,
             address,
             phone,
             owner,
