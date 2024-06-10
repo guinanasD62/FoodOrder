@@ -8,7 +8,7 @@ const JWT_SECRET = "mysecretkey";
 // Register user
 export const addUser = async (req: Request, res: Response) => {
     try {
-        const { name, email, img, phone, address, password, role } = req.body;
+        const { name, email, img, phone, address, password, role, created_at } = req.body;
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -19,7 +19,8 @@ export const addUser = async (req: Request, res: Response) => {
             phone,
             address,
             password: hashedPassword,
-            role
+            role,
+            created_at
         });
 
         await user.save();

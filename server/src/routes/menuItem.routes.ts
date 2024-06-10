@@ -1,10 +1,10 @@
 import express from "express";
-import { addmenu, deleteMenu, getAllMenu, getMenu, updateMenu } from "../controller/menu.controller";
+import { addMenu, deleteMenu, getAllMenu, getMenu, updateMenu } from "../controller/menuItem.controller";
 import { auth } from "../middleware";
 
 const router = express.Router();
 
-router.post('/addmenu', auth(['restaurant']), addmenu);
+router.post('/addmenu', auth(['restaurant', 'admin']), addMenu);
 
 router.get('/getmenus/', getAllMenu);
 router.get('/getmenu/:id', getMenu);

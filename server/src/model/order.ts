@@ -16,6 +16,7 @@ const orderSchema = new mongoose.Schema({
             quantity: {
                 type: Number,
                 required: true,
+                min: 1,
             }
         }
     ],
@@ -28,7 +29,7 @@ const orderSchema = new mongoose.Schema({
         enum: ["pending", "confirmed", "cancelled"],
         default: "pending"
     },
-    orderedAt: {
+    ordered_at: {
         type: Date,
         default: Date.now
     }

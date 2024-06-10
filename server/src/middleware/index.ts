@@ -26,16 +26,19 @@ export const generateToken = (userId: string): string => {
     return jwt.sign({ id: userId }, secret, { expiresIn: '1h' });
 };
 
-//are allowed to access a specific route.
+// //are allowed to access a specific route.
 export const auth = (roles: any = []) => {
     return async (req: any, res: any, next: any) => {
         let token;
+        console.log('headers--->', req.headers);
 
         //This checks if the request headers have an authorization field that starts with the word 'Bearer'.
-        if (req.headers.authrization && req.headers.authorization.startsWith('Bearer')) {
+        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+            console.log("re-", req.headers.authorization)
             //If it does, the token is extracted by splitting the header string and taking the second part, which is the actual token.
-            token = req.headers.authorization.split('')[1];
+            token = req.headers.authorization.split(' ')[1];
         }
+        console.log('token--->', token);
 
         if (!token) {
             return res.status(401).json({ message: 'Not authorized' })
@@ -43,8 +46,10 @@ export const auth = (roles: any = []) => {
         try {
             //This line uses jwt.verify to decode the token with a secret key (JWT_SECRET). This verifies if the token is valid.
             const decoded: any = jwt.verify(token, JWT_SECRET);
+
             //It then looks up the user in the database by the ID found in the token.
             let userDta = await User.findById(decoded.id)
+
             if (roles.length && !roles.includes(userDta.role)) {
                 return res.status(403).json({ message: 'Forbidden' })
             }
@@ -55,9 +60,47 @@ export const auth = (roles: any = []) => {
     }
 }
 /**
-  
+
+
+
   Salting: Bcrypt also incorporates a salt, a random value added to the password before hashing. This ensures that even if two users have the same password, their hashed values will be different.
-One-Way Function: The hashing process is a one-way function, meaning it cannot be reversed. 
+One-Way Function: The hashing process is a one-way function, meaning it cannot be reversed.
 
 make a function tpe not a controller type
 */
+
+
+
+// export const auth = (roles: any = []) => {
+//     return async (req: any, res: any, next: any) => {
+//         let token;
+
+//         // Check if the authorization header is present and starts with 'Bearer'
+//         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+//             token = req.headers.authorization.split(' ')[1];
+//         }
+
+//         if (!token) {
+//             return res.status(401).json({ message: 'Not authorized' });
+//         }
+
+//         try {
+//             const decoded: any = jwt.verify(token, JWT_SECRET);
+//             const user = await User.findById(decoded.id);
+
+//             if (!user) {
+//                 return res.status(401).json({ message: 'Not authorized' });
+//             }
+
+//             if (roles.length && !roles.includes(user.role)) {
+//                 return res.status(403).json({ message: 'Forbidden' });
+//             }
+
+//             req.user = user; // Attach the user to the request object
+//             next();
+//         } catch (error) {
+//             console.error(error);
+//             res.status(401).json({ message: 'Not authorized' });
+//         }
+//     }
+// }

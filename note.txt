@@ -96,7 +96,7 @@ api user and food not working
 
 5/6/24
 login register + forgot password
-
+ui connecting using axios
 ///
 
 
@@ -113,4 +113,101 @@ this is my product page ||  api controller model route
 
 ///update the UsersPage component to use Axios directly within the component to fetch users.
 please use types ts
+
+///
+06/06/24
+
+long meeting controller 
+started admin page
+
+////
+07/06/24
+api
+/////////
+error 
+to fix 
+decoded.id
+userDta.role
+///////
+
+Server is running on http://localhost:3007
+Connected to database!
+headers---> {
+  'content-type': 'application/json',
+  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjEyYmVlYzMyYmY3NmQ2NjU2ZWM4ZCIsImlhdCI6MTcxNzc0NDY4MywiZXhwIjoxNzE3NzQ4MjgzfQ.vSYGgv_RFiU5IV56kwlCSCaSkr8TGzJmB5LbzA459eY',
+  'user-agent': 'PostmanRuntime/7.37.3',
+  accept: '*/*',
+  'postman-token': '171a06cc-6db9-4273-9802-4a79060dbb2d',
+  host: 'localhost:3007',
+  'accept-encoding': 'gzip, deflate, br',
+  connection: 'keep-alive',
+  'content-length': '227'
+}
+re- [
+  'B', 'e', 'a', 'r', 'e', 'r', ' ', 'e', 'y', 'J', 'h', 'b',
+  'G', 'c', 'i', 'O', 'i', 'J', 'I', 'U', 'z', 'I', '1', 'N',
+  'i', 'I', 's', 'I', 'n', 'R', '5', 'c', 'C', 'I', '6', 'I',
+  'k', 'p', 'X', 'V', 'C', 'J', '9', '.', 'e', 'y', 'J', 'p',
+  'Z', 'C', 'I', '6', 'I', 'j', 'Y', '2', 'N', 'j', 'E', 'y',
+  'Y', 'm', 'V', 'l', 'Y', 'z', 'M', 'y', 'Y', 'm', 'Y', '3',
+  'N', 'm', 'Q', '2', 'N', 'j', 'U', '2', 'Z', 'W', 'M', '4',
+  'Z', 'C', 'I', 's', 'I', 'm', 'l', 'h', 'd', 'C', 'I', '6',
+  'M', 'T', 'c', 'x',
+  ... 78 more items
+]
+token---> e
+[nodemon] restarting due to changes...
+[nodemon] restarting due to changes...
+[nodemon] starting `ts-node ./src/index.ts`
+(node:10056) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:10056) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+Server is running on http://localhost:3007
+Connected to database!
+headers---> {
+  'content-type': 'application/json',
+  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjEyYmVlYzMyYmY3NmQ2NjU2ZWM4ZCIsImlhdCI6MTcxNzc0NDY4MywiZXhwIjoxNzE3NzQ4MjgzfQ.vSYGgv_RFiU5IV56kwlCSCaSkr8TGzJmB5LbzA459eY',
+  'user-agent': 'PostmanRuntime/7.37.3',
+  accept: '*/*',
+  'postman-token': '69ab7b7c-2a08-4639-8219-2f3f34b29855',
+  host: 'localhost:3007',
+  'accept-encoding': 'gzip, deflate, br',
+  connection: 'keep-alive',
+  'content-length': '227'
+}
+re- Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjEyYmVlYzMyYmY3NmQ2NjU2ZWM4ZCIsImlhdCI6MTcxNzc0NDY4MywiZXhwIjoxNzE3NzQ4MjgzfQ.vSYGgv_RFiU5IV56kwlCSCaSkr8TGzJmB5LbzA459eY
+token---> e
+[nodemon] restarting due to changes...
+[nodemon] starting `ts-node ./src/index.ts`
+(node:19608) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19608) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+Server is running on http://localhost:3007
+Connected to database!
+headers---> {
+  'content-type': 'application/json',
+  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjEyYmVlYzMyYmY3NmQ2NjU2ZWM4ZCIsImlhdCI6MTcxNzc0NDY4MywiZXhwIjoxNzE3NzQ4MjgzfQ.vSYGgv_RFiU5IV56kwlCSCaSkr8TGzJmB5LbzA459eY',
+  'user-agent': 'PostmanRuntime/7.37.3',
+  accept: '*/*',
+  'postman-token': '0e233e80-9281-4139-9b26-95954382a799',
+  host: 'localhost:3007',
+  'accept-encoding': 'gzip, deflate, br',
+  connection: 'keep-alive',
+  'content-length': '227'
+}
+re- Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjEyYmVlYzMyYmY3NmQ2NjU2ZWM4ZCIsImlhdCI6MTcxNzc0NDY4MywiZXhwIjoxNzE3NzQ4MjgzfQ.vSYGgv_RFiU5IV56kwlCSCaSkr8TGzJmB5LbzA459eY
+token---> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjEyYmVlYzMyYmY3NmQ2NjU2ZWM4ZCIsImlhdCI6MTcxNzc0NDY4MywiZXhwIjoxNzE3NzQ4MjgzfQ.vSYGgv_RFiU5IV56kwlCSCaSkr8TGzJmB5LbzA459eY
+[nodemon] restarting due to changes...
+[nodemon] restarting due to changes...
+[nodemon] starting `ts-node ./src/index.ts`
+
+///////////////////
+10/6/24
+
+debugging 
+
+1 Juan 3:​19, 20.
+atong bang kabalaka mas daghan atong gidala kesa atong gitugyan kang Jah
+nag-alagad ba ka tungod sa imong gugma
+
 
