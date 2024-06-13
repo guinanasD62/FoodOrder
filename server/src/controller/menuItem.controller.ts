@@ -65,9 +65,17 @@ export const getMenu = async (req: Request, res: Response) => {
 // Update menu item
 export const updateMenu = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const menu = await MenuModel.findByIdAndUpdate(id, req.body, { new: true });
+        const { id, restaurant } = req.params;
 
+        const restaurantExists = await RestaurantModel.findById(restaurant);
+
+
+        if (!restaurantExists) {
+            return res.status(404).json({ message: "Restaurant not found" });
+        }
+
+
+        const menu = await MenuModel.findByIdAndUpdate(id, req.body, { new: true });
         if (!menu) {
             return res.status(404).json({ message: "No menu item found." });
         }
@@ -81,9 +89,15 @@ export const updateMenu = async (req: Request, res: Response) => {
 // Delete menu item
 export const deleteMenu = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const menu = await MenuModel.findByIdAndDelete(id);
+        const { id, restaurant } = req.params;
 
+        const restaurantExists = await RestaurantModel.findById(restaurant);
+        if (!restaurantExists) {
+            return res.status(404).json({ message: "Restaurant not found" });
+        }
+
+
+        const menu = await MenuModel.findByIdAndDelete(id);
         if (!menu) {
             return res.status(404).json({ message: "No menu item found." });
         }

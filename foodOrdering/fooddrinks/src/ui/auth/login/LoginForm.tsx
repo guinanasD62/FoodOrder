@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '@/redux/customerSlice/session';
 import styles from './LoginForm.module.css';
 
 const LoginForm: React.FC = () => {
@@ -11,6 +13,7 @@ const LoginForm: React.FC = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,8 +23,8 @@ const LoginForm: React.FC = () => {
                 password,
             });
             if (response.data.token) {
-                localStorage.setItem('token', response.data.token); // Store token in local storage
-                router.push('/admindashboard/admin'); // Redirect to dashboard or another page
+                dispatch(loginSuccess({ token: response.data.token, user: { email } }));
+                router.push('/admin'); // Redirect to dashboard or another page
             }
         } catch (error: any) {
             setError(error.response?.data?.message || 'Login failed');
@@ -53,9 +56,6 @@ const LoginForm: React.FC = () => {
                 />
                 <button type="submit">Login</button>
                 <br /> <br />
-                {/* <Link href="/forgotPassword">Forgot Password?</Link>
-                <br />
-                <Link href="/resetPassword">Reset Password</Link> */}
                 <br />
                 <Link href="/register">Register</Link>
             </form>

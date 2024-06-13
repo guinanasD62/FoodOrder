@@ -50,7 +50,7 @@ const SingleUserPage = ({ params }: { params: Params }) => {
         try {
             const response = await axios.put(`http://localhost:3007/updateuser/${user._id}`, user);
             setUser(response.data.data);
-            router.push('/admindashboard/admin');
+            router.push('/admin');
         } catch (error: any) {
             setError(error.response?.data?.message || 'Error updating user');
         }

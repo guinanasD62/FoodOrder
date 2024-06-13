@@ -6,9 +6,11 @@ import React from 'react'
 const UsersPage = () => {
     return (
         <>
+
             <Navbar />
             <Slideshow />
             <TitlebarImageList />
+
         </>
     )
 }

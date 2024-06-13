@@ -29,16 +29,16 @@ export const generateToken = (userId: string): string => {
 // //are allowed to access a specific route.
 export const auth = (roles: any = []) => {
     return async (req: any, res: any, next: any) => {
-        let token;
-        console.log('headers--->', req.headers);
+        let token; //   let token: string | undefined;
+        //     console.log('headers--->', req.headers);
 
         //This checks if the request headers have an authorization field that starts with the word 'Bearer'.
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-            console.log("re-", req.headers.authorization)
+            // console.log("re-", req.headers.authorization)
             //If it does, the token is extracted by splitting the header string and taking the second part, which is the actual token.
             token = req.headers.authorization.split(' ')[1];
         }
-        console.log('token--->', token);
+        //  console.log('token--->', token);
 
         if (!token) {
             return res.status(401).json({ message: 'Not authorized' })
@@ -46,20 +46,27 @@ export const auth = (roles: any = []) => {
         try {
             //This line uses jwt.verify to decode the token with a secret key (JWT_SECRET). This verifies if the token is valid.
             const decoded: any = jwt.verify(token, JWT_SECRET);
-            console.log('Decoded token--->', decoded);
+            //console.log('Decoded token--->', decoded);
 
             //It then looks up the user in the database by the ID found in the token.
             let userDta = await User.findById(decoded.id)
-            console.log('User data--->', userDta);
+            // console.log('User data--->', userDta);
+
+
+            // if (!userDta) {
+            //     return res.status(401).json({ message: 'Not authorized' });
+            // }
 
             if (roles.length && !roles.includes(userDta.role)) {
                 return res.status(403).json({ message: 'Forbidden' })
             }
             console.log('User role authorized--->', userDta.role);
 
+            req.user = userDta; // Attach user to request
             next();
         } catch (error) {
-
+            console.error(error);
+            res.status(500).json({ message: 'Server error' });
         }
     }
 }

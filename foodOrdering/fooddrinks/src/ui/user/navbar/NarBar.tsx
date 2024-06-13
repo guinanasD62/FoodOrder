@@ -124,7 +124,7 @@ const Navbar: React.FC = () => {
                 <ul className={styles.list}>
                     {/* <li><Link href="/customer/products" className={styles.containerCustomer}>Products</Link></li> */}
                     <li>
-                        <Link href="/customer/cart" className={styles.containerCustomer} onClick={handleCartClick}>
+                        <Link href="/user/cart" className={styles.containerCustomer} onClick={handleCartClick}>
                             Cart
                             {/* View Cart {cartCount > 0 && `(${cartCount})`} */}
                             <IconButton color="inherit">

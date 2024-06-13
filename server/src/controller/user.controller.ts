@@ -155,6 +155,30 @@ export const login = async (req: Request, res: Response) => {
 };
 
 
+export const getCurrentUser = async (req: Request, res: Response) => {
+    const authorizationHeader = req.headers.authorization;
+    if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    const token = authorizationHeader.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    try {
+        const decoded: any = jwt.verify(token, JWT_SECRET);
+        let userData = await User.findById(decoded.id);
+        if (!userData) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ userData });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 // // Verify Email
 // export const verifyEmail = async (req: Request, res: Response) => {
 //     const { email } = req.body;

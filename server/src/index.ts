@@ -35,6 +35,3 @@ app.use("/", cartRoutes);
 app.listen(3007, () => {
     console.log(`Server is running on http://localhost:3007`);
 });
-
-
-

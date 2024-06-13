@@ -47,7 +47,6 @@ update password
 Login page
 Registration
 Forgot password
-
 Reset  password
  
 brief
@@ -136,12 +135,48 @@ userDta.role
 
 debugging Auth 2 hours
 debugging admin, restaurant, menuItem
+creating banner, food grid, navbar
 
 
 1 Juan 3:​19, 20.
 atong bang kabalaka mas daghan atong gidala kesa atong gitugyan kang Jah
-nag-alagad ba ka tungod sa imong gugma
+nag-alagad ba ka tungod sa imong gugma?
 
 
+
+
+auth context built in state manager. management sa react
+redux external lib, state management
+life cycle react?
+virtual dom > 
+components child and parent
+ props 
+
+11/06/24
+UI admin edit add
+ui 
+to be put regex and multer, redux thunk
+
+https://www.youtube.com/watch?v=nGoSP3MBV2E
+https://www.youtube.com/watch?v=gXlcwtS40LA
+https://youtu.be/gXlcwtS40LA
+https://youtu.be/gXlcwtS40LA
+
+bakend node js 
+user own concept 
+redux
+thothling 
+debouncer
+
+i likeyou so much and we lost it
+little do you know
+
+13/06/24
+redux 
+fixing login logout
+
+14/6/24
+login
+if the role is equal to user please navigate to http://localhost:3000/user
 
 
