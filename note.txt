@@ -174,9 +174,48 @@ little do you know
 13/06/24
 redux 
 fixing login logout
+menuitem mock data
 
 14/6/24
 login
 if the role is equal to user please navigate to http://localhost:3000/user
 
 
+https://wol.jw.org/ceb/wol/d/r101/lp-cv/2024365#h=15
+par 8
+lahi lahig nawong - lahi lahig hiyas
+wala pasaabot na kon hamtong parehas og desisyon sa sama na panahon
+dil himan, magpabiling nahiusa
+
+////
+
+
+retsto ha mnue
+
+resto id 
+fetch all menu
+under object id 
+
+get all 
+realation has restauran 
+saving id
+easier to fetch 
+difirent aproach
+
+restao in front end 
+menu from resto 
+
+admin add resto
+save email ang phone 
+
+diana hotel name rensim, admin under name blue 
+
+user admin
+owner 
+
+if youcrated a login 
+domino actually domnimo 
+
+create resto 
+user create 
+basically admin created like same of personal person 

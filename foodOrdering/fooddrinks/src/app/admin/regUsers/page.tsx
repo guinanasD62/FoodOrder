@@ -79,7 +79,7 @@ const UsersPage: React.FC = () => {
                     </tbody>
                 </table>
                 <div className={styles.tableContainer}>
-                    <Link href="/admin/add">
+                    <Link href="/admin/regUsers/addUser">
                         <button className={styles.button}>Add New</button>
 
                     </Link>

@@ -2,9 +2,9 @@
 
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation';
 import { RootState } from '../redux/store';
-import { loginSuccess, clearSession } from '../redux/customerSlice/session'; // Ensure the correct path
+import { loginSuccess, clearSession } from '../redux/customerSlice/session';
 
 type AuthContextType = {
   isAuthenticated: boolean;

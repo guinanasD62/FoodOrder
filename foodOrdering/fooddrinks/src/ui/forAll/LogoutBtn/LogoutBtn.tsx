@@ -1,7 +1,8 @@
 "use client";
 
 import React from 'react';
-import { useAuth } from '../../../auth/auth-context';
+import styles from '../LogoutBtn/LogoutBtn.module.css';
+import { useAuth } from '@/auth/auth-context';
 
 const LogoutButton: React.FC = () => {
     const auth = useAuth();
@@ -11,7 +12,8 @@ const LogoutButton: React.FC = () => {
     };
 
     return (
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleLogout} className={styles.button}>
+            Logout</button>
     );
 };
 

@@ -1,0 +1,19 @@
+/* styles/LogoutButton.module.css */
+.button {
+    padding: 1rem 1.5rem;
+    background-color: #ee4c5a;
+    /* Red background */
+    color: white;
+    /* White text */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button:hover {
+    background-color: lightgray;
+    /* Light gray background on hover */
+    color: black;
+    /* Black text on hover */
+}
