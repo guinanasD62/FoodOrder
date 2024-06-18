@@ -246,7 +246,45 @@ if the role is equal to user please navigate to http://localhost:3000/user
 
 to do : 6/18/24
 how redux-persist
-ui resto + update + delete
-modify add
+/ ui resto + update + delete
+/ modify add
+/ added errror validation in every input
 
-if still have time user side axioous
+if still have time user side axios
+
+add resto you are creating as 
+
+QXK1048545
+
+page del
+ - add
+ - [id] update
+   visit re page del 
+     - [id] upadte
+     - add menu
+  
+
+
+Redux Persist is a library that helps you save your Redux state to a storage (like localStorage or sessionStorage) so that it persists across page refreshes. In this case, we are using sessionStorage, which means the state will persist as long as the browser tab is open.
+The main idea is that when the user logs in, the login action is dispatched, which updates the Redux state. The redux-persist middleware then automatically saves this state to sessionStorage. When the application is reloaded, redux-persist rehydrates (restores) the state from sessionStorage, ensuring the user remains logged in.
+
+  Step 1: Install Dependencies
+Step 2: Configure Redux Persist with Session Storage
+store.ts
+//
+persistConfig: This is a configuration object for Redux Persist.
+persistReducer: This is a function from Redux Persist that enhances your reducer to persist its state.
+//2
+persistReducer(persistConfig, sessionReducer): This function takes two arguments:
+persistConfig: The configuration object we just created.
+sessionReducer: The reducer that we want to persist.
+//
+How It Fits Together
+Configure the Persisted Reducer: We enhance our existing reducer (sessionReducer) with persistence capabilities using persistReducer.
+
+Step 3: Create a Redux Provider with PersistGate
+redux-provider
+Step 4: Use ReduxProvider in Your Next.js Layout
+main layout
+Step 5: Ensure Auth Context Relies on Redux State
+auth-context

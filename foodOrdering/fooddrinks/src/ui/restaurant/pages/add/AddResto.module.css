@@ -1,0 +1,58 @@
+.container {
+    margin-top: 0px;
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+
+    height: 100%;
+    background-color: rgba(255, 192, 203, 0.137);
+}
+
+.form {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+
+
+.form div {
+    width: 45%;
+    margin-bottom: 30px;
+}
+
+.form input,
+.form textarea,
+.form select {
+    width: 100%;
+    padding: 25px;
+    background-color: var(--bg);
+    color: var(--text);
+    border: 1px solid rgba(255, 0, 0, 0.432);
+    border-radius: 5px;
+
+}
+
+.form textarea {
+    height: 100px;
+}
+
+.addButton {
+    width: 30%;
+    padding: 20px;
+    background-color: pink;
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 60rem;
+}
+
+
+.addButton:hover {
+    background-color: darkred;
+    color: aliceblue;
+}

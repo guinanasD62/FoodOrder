@@ -17,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const dispatch = useDispatch();
+  //session: persistedReducer, // Use the persisted reducer from store.ts
   const { token, isAuthenticated, user } = useSelector((state: RootState) => state.session);
   const router = useRouter();
 

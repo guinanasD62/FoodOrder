@@ -1,0 +1,84 @@
+.adminContainer {
+    padding: 20px;
+    background-color: #ffe4e13b;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.addButtonContainer {
+    margin-bottom: 20px;
+}
+
+.addButton {
+    padding: 10px 20px;
+    background-color: rgba(255, 0, 0, 0.61);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 2rem;
+    margin-left: 60rem;
+}
+
+.addButton:hover {
+    background-color: darkred;
+}
+
+.table {
+    margin-top: 2rem;
+    width: 90%;
+    border-collapse: collapse;
+
+
+}
+
+.tableHead {
+    background-color: pink;
+}
+
+.tableBody {
+    background-color: #fff;
+}
+
+.tableRow:hover {
+    background-color: #ffe4e1;
+
+}
+
+.tableHead th,
+.tableBody td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+
+.updateButton,
+.deleteButton {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: .1rem
+}
+
+.updateButton {
+    background-color: #4caf4f;
+    color: gainsboro;
+}
+
+.updateButton:hover {
+    background-color: #063108;
+    color: azure;
+}
+
+.deleteButton {
+    background-color: #f44336;
+    color: white;
+}
+
+.deleteButton:hover {
+    background-color: darkred;
+}

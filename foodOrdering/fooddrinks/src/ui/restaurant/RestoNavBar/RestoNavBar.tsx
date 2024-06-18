@@ -12,40 +12,37 @@ interface RestoNavbarProps {
     setUserId: (userId: string) => void;
 }
 
-const
-    RestoNavbar: React.FC<RestoNavbarProps> = ({ setUserId }) => {
-        const dispatch = useDispatch();
-        const router = useRouter();
-        const user = useSelector((state: any) => state.session.user);
-        const isAuthenticated = useSelector((state: any) => state.session.isAuthenticated);
+const RestoNavbar: React.FC<RestoNavbarProps> = ({ setUserId }) => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const user = useSelector((state: any) => state.session.user);
+    const isAuthenticated = useSelector((state: any) => state.session.isAuthenticated);
 
-        useEffect(() => {
-            if (user && isAuthenticated) {
-                setUserId(user.id);
-            }
-        }, [user, isAuthenticated, setUserId]);
+    useEffect(() => {
+        if (user && isAuthenticated) {
+            setUserId(user.id);
+        }
+    }, [user, isAuthenticated, setUserId]);
 
-        return (
-            <nav className={styles.navbar}>
-                <div className={styles.navbarContainer}>
-                    <Link href="/" className={styles.logo}>
-                        Admin Restaurant
+    return (
+        <nav className={styles.appBar}>
+            <div className={styles.containerNav}>
+                <Link href="/" className={styles.title}>
+                    Admin Restaurant
+                </Link>
+                {isAuthenticated && user ? (
+                    <div className={styles.containerCustomer}>
+                        Hello, {user.name} (ID: {user.id}) (Role: {user.role})
+                        <LogoutButton />
+                    </div>
+                ) : (
+                    <Link href="/login" className={styles.logout}>
+                        Login
                     </Link>
-                    {isAuthenticated && user ? (
-                        <>
-                            <div className={styles.userContainer}>
-                                Hello, {user.name} (ID: {user.id} (Role: {user.role})
-                                <LogoutButton />
-                            </div>
-                        </>
-                    ) : (
-                        <Link href="/login" className={styles.loginButton}>
-                            Login
-                        </Link>
-                    )}
-                </div>
-            </nav>
-        );
-    };
+                )}
+            </div>
+        </nav>
+    );
+};
 
 export default RestoNavbar;

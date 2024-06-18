@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
-import RestoNavbar from '@/ui/restaurant/RestoNavBar/RestoNavBar'
+import RestoNavbar from '@/ui/restaurant/RestoNavBar/RestoNavBar';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import styles from '@/ui/restaurant/pages/Main/MainResto.module.css';
 
 interface Restaurant {
     _id: string;
@@ -23,7 +24,7 @@ const AdminRestaurants = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
-    // const router = useRouter();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchRestaurants = async () => {
@@ -40,6 +41,21 @@ const AdminRestaurants = () => {
         fetchRestaurants();
     }, []);
 
+    const handleDelete = async (id: string) => {
+        try {
+            await axios.delete(`http://localhost:3007/deleterestaurant/${id}`);
+            setRestaurants(restaurants.filter(restaurant => restaurant._id !== id));
+            alert("Restaurant deleted successfully");
+        } catch (err) {
+            console.error('Failed to delete restaurant', err);
+            setError('Failed to delete restaurant');
+        }
+    };
+
+    const handleUpdate = (id: string) => {
+        router.push(`/${restaurants}/${id}`);
+    };
+
     useEffect(() => {
         if (userId) {
             const filtered = restaurants.filter(restaurant => restaurant.owner === userId);
@@ -51,48 +67,57 @@ const AdminRestaurants = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <div>
-            <RestoNavbar setUserId={setUserId} />
+        <><RestoNavbar setUserId={setUserId} />
 
-            <div>
-                <Link href="/${restaurant}/addRestaurant" passHref>
-                    <button>Add New</button>
-                </Link>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Owner</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                        <td>Action</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredRestaurants.map((restaurant) => (
-                        <tr key={restaurant._id}>
-                            <td>{restaurant.name}</td>
-                            <td>{restaurant.email}</td>
-                            <td>{restaurant.address}</td>
-                            <td>{restaurant.phone}</td>
-                            <td>{restaurant.owner}</td>
-                            <td>{new Date(restaurant.createdAt).toLocaleDateString()}</td>
-                            <td>{new Date(restaurant.updatedAt).toLocaleDateString()}</td>
-                            <td>
-                                <button></button>
-
-
-                            </td>
+            <div className={styles.adminContainer}>
+                <table className={styles.table}>
+                    <thead className={styles.tableHead}>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            {/* <th>Owner</th> */}
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Action</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody className={styles.tableBody}>
+                        {filteredRestaurants.map((restaurant) => (
+                            <tr key={restaurant._id} className={styles.tableRow}>
+                                <td>{restaurant.name}</td>
+                                <td>{restaurant.email}</td>
+                                <td>{restaurant.address}</td>
+                                <td>{restaurant.phone}</td>
+                                {/* <td>{restaurant.owner}</td> */}
+                                <td>{new Date(restaurant.createdAt).toLocaleDateString()}</td>
+                                <td>{new Date(restaurant.updatedAt).toLocaleDateString()}</td>
+                                <td>
+                                    <button
+                                        onClick={() => handleUpdate(restaurant._id)}
+                                        className={styles.updateButton}
+                                    >
+                                        View
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(restaurant._id)}
+                                        className={styles.deleteButton}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                <div className={styles.addButtonContainer}>
+                    <Link href="/${restaurant}/addRestaurant" passHref>
+                        <button className={styles.addButton}>Add New Restaurant</button>
+                    </Link>
+                </div>
+            </div></>
     );
 };
 
