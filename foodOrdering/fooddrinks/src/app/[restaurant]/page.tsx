@@ -1,104 +1,99 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
-import styles from '@/ui/restaurant/dynamicResto/DynamicResto.module.css';
+import RestoNavbar from '@/ui/restaurant/RestoNavBar/RestoNavBar'
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react'
+import Link from 'next/link';
 
-interface MenuItem {
+interface Restaurant {
     _id: string;
     name: string;
-    description: string;
-    price: number;
-    quantity: number;
-    restaurant: string;
-    category: string;
+    email: string;
+    address: string;
+    phone: number;
+    owner: string;
     createdAt: string;
     updatedAt: string;
 }
 
-const MenuItemList: React.FC = () => {
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-    const restaurantId = '66666dc79831d485de206b55'; // Replace with dynamic value if needed
-
-    const mockData: MenuItem[] = [
-        {
-            _id: '66666e2e9831d485de206b59',
-            name: 'Hawaiian Cheezy Pizza',
-            description: 'A delicious Hawaiian Cheezy Pizza with fresh ingredients.',
-            price: 29.99,
-            quantity: 57,
-            restaurant: '66666dc79831d485de206b55',
-            category: 'fast food',
-            createdAt: '2024-06-10T03:08:30.592Z',
-            updatedAt: '2024-06-10T03:08:30.592Z',
-        },
-        {
-            _id: '66666eb19831d485de206b5d',
-            name: 'Ham Cheeze Pizza',
-            description: 'A delicious Ham Cheeze Pizza with fresh ingredients.',
-            price: 19.99,
-            quantity: 51,
-            restaurant: '66666dc79831d485de206b55',
-            category: 'fast food',
-            createdAt: '2024-06-10T03:10:41.912Z',
-            updatedAt: '2024-06-10T03:10:41.912Z',
-        },
-        {
-            _id: '66666ee29831d485de206b61',
-            name: 'Pepperoni Pizza',
-            description: 'A delicious Pepperoni Pizza with fresh ingredients.',
-            price: 24.99,
-            quantity: 41,
-            restaurant: '66666dc79831d485de206b55',
-            category: 'fast food',
-            createdAt: '2024-06-10T03:11:30.949Z',
-            updatedAt: '2024-06-10T03:11:30.949Z',
-        },
-    ];
+const AdminRestaurants = () => {
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
+    // const router = useRouter();
 
     useEffect(() => {
-        // Simulate data fetching
-        const fetchMenuItems = () => {
-            const filteredItems = mockData.filter((item) => item.restaurant === restaurantId);
-            setMenuItems(filteredItems);
+        const fetchRestaurants = async () => {
+            try {
+                const response = await axios.get<{ data: Restaurant[] }>('http://localhost:3007/getrestaurants');
+                setRestaurants(response.data.data);
+            } catch (error) {
+                setError('Failed to fetch restaurants');
+            } finally {
+                setLoading(false);
+            }
         };
 
-        fetchMenuItems();
-    }, [restaurantId]);
+        fetchRestaurants();
+    }, []);
+
+    useEffect(() => {
+        if (userId) {
+            const filtered = restaurants.filter(restaurant => restaurant.owner === userId);
+            setFilteredRestaurants(filtered);
+        }
+    }, [restaurants, userId]);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.header}>Menu Items</h1>
-            <div className={styles.tableContainer}>
-                <table className={styles.table}>
-                    <thead>
-                        <tr>
-                            <th className={styles.th}>Name</th>
-                            <th className={styles.th}>Description</th>
-                            <th className={styles.th}>Price</th>
-                            <th className={styles.th}>Quantity</th>
-                            <th className={styles.th}>Created At</th>
-                            <th className={styles.th}>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {menuItems.map((item) => (
-                            <tr key={item._id}>
-                                <td className={styles.td}>{item.name}</td>
-                                <td className={styles.td}>{item.description}</td>
-                                <td className={styles.td}>{item.price}</td>
-                                <td className={styles.td}>{item.quantity}</td>
-                                <td className={styles.td}>{new Date(item.createdAt).toLocaleDateString()}</td>
-                                <td className={styles.td}>
-                                    <button className={styles.update}>Update</button>
-                                    <button className={styles.button}>Delete</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        <div>
+            <RestoNavbar setUserId={setUserId} />
+
+            <div>
+                <Link href="/${restaurant}/addRestaurant" passHref>
+                    <button>Add New</button>
+                </Link>
             </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Owner</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredRestaurants.map((restaurant) => (
+                        <tr key={restaurant._id}>
+                            <td>{restaurant.name}</td>
+                            <td>{restaurant.email}</td>
+                            <td>{restaurant.address}</td>
+                            <td>{restaurant.phone}</td>
+                            <td>{restaurant.owner}</td>
+                            <td>{new Date(restaurant.createdAt).toLocaleDateString()}</td>
+                            <td>{new Date(restaurant.updatedAt).toLocaleDateString()}</td>
+                            <td>
+                                <button></button>
+
+
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
 
-export default MenuItemList;
+export default AdminRestaurants;

@@ -1,9 +1,10 @@
-// src/features/session/sessionSlice.ts
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
+  id: string;
   email: string;
+  role: string;
+  name: string;
   isAdmin?: boolean;
   isActive?: boolean;
 }
@@ -28,6 +29,7 @@ const sessionSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.isAuthenticated = true;
+      console.log('User logged in:', state.user);
     },
     clearSession(state) {
       state.token = null;

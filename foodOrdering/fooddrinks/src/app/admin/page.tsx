@@ -85,12 +85,7 @@ const UsersPage: React.FC = () => {
                         ))}
                     </tbody>
                 </table>
-                <div className={styles.tableContainer}>
-                    <Link href="/admin/addUser">
-                        <button className={styles.button}>Add New</button>
 
-                    </Link>
-                </div>
             </div>
             {/* </PrivateRoute> */}
         </>
@@ -98,13 +93,22 @@ const UsersPage: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            {/* <h1 className={styles.header}>Admin Panel</h1> */}
+
             {error && <p className={styles.error}>{error}</p>}
+            <h1 className={styles.header}>Welcome </h1>
+            {renderTable('adminAdmin')}
+            <br /> <br /> <br />
             {renderTable('admin')}
             <br /> <br /> <br />
             {/* {renderTable('restaurant')} */}
             {/* {renderTable('user')} */}
 
+            <div className={styles.tableContainer}>
+                <Link href="/admin/addUser">
+                    <button className={styles.button}>Add New</button>
+
+                </Link>
+            </div>
         </div >
     );
 };

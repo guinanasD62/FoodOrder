@@ -5,7 +5,8 @@ const router = express.Router();
 
 
 // router.post('/addrestaurant', auth(['admin']), addRestaurant);
-router.post('/addrestaurant', auth(['admin']), addRestaurant);
+router.post('/addrestaurant', addRestaurant);
+// router.post('/addrestaurant', auth(['admin']), addRestaurant);
 
 router.get('/getrestaurants', getAllRestaurants);
 router.get('/getrestaurant/:id', getRestaurant);

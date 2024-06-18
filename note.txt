@@ -176,21 +176,17 @@ redux
 fixing login logout
 menuitem mock data
 
-14/6/24
-login
-if the role is equal to user please navigate to http://localhost:3000/user
-
-
+*********************************************************
 https://wol.jw.org/ceb/wol/d/r101/lp-cv/2024365#h=15
 par 8
 lahi lahig nawong - lahi lahig hiyas
-wala pasaabot na kon hamtong parehas og desisyon sa sama na panahon
+wala pasaabot na kon hamtong parehas og desisyon sa sama sitwasyon og sama nga panahon
 dil himan, magpabiling nahiusa
 
 ////
 
 
-retsto ha mnue
+resto has menu
 
 resto id 
 fetch all menu
@@ -219,3 +215,38 @@ domino actually domnimo
 create resto 
 user create 
 basically admin created like same of personal person 
+
+/// 14/06/24 
+8 - 10
+1. redux-persist
+https://chatgpt.com/share/e59e622d-1e65-4395-9b7d-34553da3bbbb
+**********
+can you please explain to me what changes you have made to ensure that the authentication state persists across page refreshes
+888888888888
+redux-persist is used to automatically handle persisting the Redux state.
+sessionStorage is chosen to store the authentication state, ensuring it only persists for the duration of the session.
+
+2. Create a Redux Provider with PersistGate || redux-provider.tsx ||  wraps the application with both the Redux Provider and the PersistGate from redux-persist.
+The PersistGate ensures that the persisted state is rehydrated before the app renders.
+
+3. Use ReduxProvider in Your Next.js Layout || layout.tsx || Wrapped the application with the custom ReduxProvider
+ Redux store and persisted state are available throughout the application.
+Also wrapped the AuthProvider inside the ReduxProvider to maintain the context.
+
+4.  Ensure Auth Context Relies on Redux State || auth-context.tsx || 
+The AuthContext relies on Redux state for authentication data, which is now persisted using redux-persist.
+
+store.tsx
+
+
+// create resto
+login
+if the role is equal to user please navigate to http://localhost:3000/user
+
+
+to do : 6/18/24
+how redux-persist
+ui resto + update + delete
+modify add
+
+if still have time user side axioous
