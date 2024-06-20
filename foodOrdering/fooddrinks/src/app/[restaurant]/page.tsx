@@ -19,7 +19,7 @@ interface Restaurant {
 }
 
 const AdminRestaurants = () => {
-    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    const [restaurant, setRestaurant] = useState<Restaurant[]>([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -30,7 +30,7 @@ const AdminRestaurants = () => {
         const fetchRestaurants = async () => {
             try {
                 const response = await axios.get<{ data: Restaurant[] }>('http://localhost:3007/getrestaurants');
-                setRestaurants(response.data.data);
+                setRestaurant(response.data.data);
             } catch (error) {
                 setError('Failed to fetch restaurants');
             } finally {
@@ -44,7 +44,7 @@ const AdminRestaurants = () => {
     const handleDelete = async (id: string) => {
         try {
             await axios.delete(`http://localhost:3007/deleterestaurant/${id}`);
-            setRestaurants(restaurants.filter(restaurant => restaurant._id !== id));
+            setRestaurant(restaurant.filter(restaurant => restaurant._id !== id));
             alert("Restaurant deleted successfully");
         } catch (err) {
             console.error('Failed to delete restaurant', err);
@@ -53,15 +53,15 @@ const AdminRestaurants = () => {
     };
 
     const handleUpdate = (id: string) => {
-        router.push(`/${restaurants}/${id}`);
+        router.push(`/restaurant/${id}`);
     };
 
     useEffect(() => {
         if (userId) {
-            const filtered = restaurants.filter(restaurant => restaurant.owner === userId);
+            const filtered = restaurant.filter(restaurant => restaurant.owner === userId);
             setFilteredRestaurants(filtered);
         }
-    }, [restaurants, userId]);
+    }, [restaurant, userId]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;

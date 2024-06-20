@@ -28,3 +28,9 @@ a {
     color-scheme: dark;
   }
 }
+
+/* @media screen and (max-width: 767px) {
+  .rowContent {
+    height: auto;
+  }
+} */

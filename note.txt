@@ -288,3 +288,39 @@ Step 4: Use ReduxProvider in Your Next.js Layout
 main layout
 Step 5: Ensure Auth Context Relies on Redux State
 auth-context
+
+error handler each field 
+https://chatgpt.com/c/08bef7cc-d3ff-42a9-ab8d-983ad36cd9da
+
+19/06/24
+to do menu list  5
+filter  add   delete 
+search debouncer
+
+to ensure that the restaurantId is correctly passed as a query parameter in the URL
+
+20/6/24
+menuItems edit
+id to name
+user
+route debugging
+id passing
+
+1. app route
+2. CSS Modules create unique class names for each component, so you don't have to worry about style collisions.
+3. Images without dimensions and web fonts are common causes of layout shift due to the browser having to download additional resources.
+4. Nested routing
+Next.js uses file-system routing where folders are used to create nested routes. Each folder represents a route segment that maps to a URL segment.
+What is the purpose of the layout file in Next.js? To share UI across multiple pages |  the layout file is the best way to create a shared layout that all pages in your application can use.
+5. 
+
+how queries string are created in nextjs 14
+Ensure Correct Routing and Parameter Passing
+useSearchParams.
+Update the RestoMenuItem component to pass both restaurantId and menuItemId in the URL parameters.
+Ensure the UpdateMenuItemFromResto component retrieves these parameters correctly using useSearchParams.
+These changes should ensure that the UpdateMenuItemFromResto component correctly receives and processes the menuItemId and restaurantId parameters, allowing it to fetch and update the correct menu item.
+https://chatgpt.com/c/3903e048-73f2-4f4f-9010-d40f976f2119
+
+21/6/24
+ redux toolkit and thunk, toaster,  debouncer

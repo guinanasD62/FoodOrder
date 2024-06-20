@@ -67,12 +67,6 @@ export const updateMenu = async (req: Request, res: Response) => {
     try {
         const { id, restaurant } = req.params;
 
-        const restaurantExists = await RestaurantModel.findById(restaurant);
-
-
-        if (!restaurantExists) {
-            return res.status(404).json({ message: "Restaurant not found" });
-        }
 
 
         const menu = await MenuModel.findByIdAndUpdate(id, req.body, { new: true });
@@ -90,12 +84,6 @@ export const updateMenu = async (req: Request, res: Response) => {
 export const deleteMenu = async (req: Request, res: Response) => {
     try {
         const { id, restaurant } = req.params;
-
-        const restaurantExists = await RestaurantModel.findById(restaurant);
-        if (!restaurantExists) {
-            return res.status(404).json({ message: "Restaurant not found" });
-        }
-
 
         const menu = await MenuModel.findByIdAndDelete(id);
         if (!menu) {

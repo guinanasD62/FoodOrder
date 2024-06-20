@@ -2,26 +2,42 @@
     background-color: var(--bgSoft);
     padding: 20px;
     border-radius: 10px;
-    margin-top: 20px;
     background-color: rgba(255, 192, 203, 0.171);
     height: 100%;
+
+
 }
 
 .container h1 {
     margin-bottom: 4rem;
 }
 
+.brand {
+    border: 0px;
+    border-color: none;
+    font-weight: 700;
+    color: red;
+    background-color: var(--bgSoft);
+    font-size: 4rem;
+    margin: 1rem;
+
+
+}
+
 .form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-left: 15rem;
+    width: 80%;
 }
 
 .form label {
-    width: 45%;
+    width: 30%;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
+
 }
 
 .form input,
@@ -43,7 +59,8 @@
     display: flex;
     margin-left: 55rem;
     gap: 1rem;
-    width: 200rem;
+    width: 18rem;
+
 }
 
 .visitButton {

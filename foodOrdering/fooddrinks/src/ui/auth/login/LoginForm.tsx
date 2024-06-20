@@ -48,7 +48,7 @@ const LoginForm: React.FC = () => {
 
                 // Redirect based on role 
                 if (response.data.user.role === 'admin') {
-                    router.push('/restaurant');
+                    router.push('/${restaurant}');
                 } else if (response.data.user.role === 'user') {
                     router.push('/user');
                 } else if (response.data.user.role === 'adminAdmin') {

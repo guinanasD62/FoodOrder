@@ -1,0 +1,54 @@
+.appBar {
+    background-color: red;
+}
+
+.title {
+    flex-grow: 1;
+    font-size: 1.5em;
+    color: #fffffa;
+    text-decoration: none;
+    padding-left: 2rem;
+    font-weight: 1000;
+    font-size: 40px;
+
+}
+
+.containerNav {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: red;
+    margin: 0;
+}
+
+.containerCustomer {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    color: whitesmoke;
+    font-size: 18px;
+    background-color: #2e374a;
+    width: 40%;
+    padding-left: 2rem;
+}
+
+.addButton {
+    padding: 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    text-decoration: none;
+}
+
+.addButton:hover {
+    background-color: #055a09;
+    color: white;
+}

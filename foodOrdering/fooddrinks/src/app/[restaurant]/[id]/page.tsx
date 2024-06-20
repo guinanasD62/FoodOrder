@@ -1,13 +1,11 @@
 "use client";
 
-import RestoNavbar from "@/ui/restaurant/RestoNavBar/RestoNavBar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "@/ui/restaurant/pages/idUpdate/Update.Resto.module.css";
 import Link from "next/link";
-import RestoMenuItem from "./[menuItems]/page";
-
+import RestoNavbar from "@/ui/restaurant/RestoNavBar/RestoNavBar";
 
 interface RestaurantData {
     _id: string;
@@ -30,6 +28,7 @@ const UpdateResto = ({ params }: { params: Params }) => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const [userId, setUserId] = useState<string | null>(null);
 
     const fetchRestaurant = async (id: string): Promise<RestaurantData> => {
         const response = await axios.get(`http://localhost:3007/getrestaurant/${id}`);
@@ -63,13 +62,13 @@ const UpdateResto = ({ params }: { params: Params }) => {
             email: formData.get("email")?.toString() || restaurant.email,
             address: formData.get("address")?.toString() || restaurant.address,
             phone: formData.get("phone")?.toString() || restaurant.phone,
-            owner: formData.get("owner")?.toString() || restaurant.owner,
+            owner: userId,
         };
 
         try {
-            const response = await axios.put(`http://localhost:3007/updaterestaurant/${id}`, updatedRestaurant);
+            await axios.put(`http://localhost:3007/updaterestaurant/${id}`, updatedRestaurant);
             alert("Restaurant updated successfully");
-            router.push(`/restaurant`);
+            router.push(`/restaurant/${id}`);
         } catch (error) {
             console.error("Failed to update restaurant", error);
             setError("Failed to update restaurant");
@@ -80,19 +79,20 @@ const UpdateResto = ({ params }: { params: Params }) => {
     if (error) return <div>{error}</div>;
     if (!restaurant) return <div>Restaurant not found</div>;
 
-    const handleVisit = (id: string) => {
-        router.push(`/restaurant/${id}/menuItems`);
+    const handleVisit = () => {
+        router.push(`/restaurant/${restaurant?._id}/menuItems?restaurantId=${restaurant?._id}`);
     };
 
     return (
         <>
+            <RestoNavbar setUserId={setUserId} />
             <div className={styles.container}>
-                <h1>Update Restaurant</h1>
+                <h4>Update Restaurant</h4>
+                <label>
+                    <input type="text" name="name" className={styles.brand} defaultValue={restaurant.name} />
+                </label>
+
                 <form onSubmit={handleUpdate} className={styles.form}>
-                    <label>
-                        Name:
-                        <input type="text" name="name" defaultValue={restaurant.name} />
-                    </label>
                     <br />
                     <label>
                         Email:
@@ -109,25 +109,19 @@ const UpdateResto = ({ params }: { params: Params }) => {
                         <input type="text" name="phone" defaultValue={restaurant.phone.toString()} />
                     </label>
                     <br />
-                    <label>
-                        Owner:
-                        <input type="text" name="owner" defaultValue={restaurant.owner} />
-                    </label>
-                    <br />
                     <div className={styles.button}>
-                        <button type="submit" className={styles.addButton}>
-                            Update Restaurant
-                        </button>
-                        <button type="button" className={styles.visitButton} onClick={() => handleVisit(restaurant._id)}>
+                        <Link href={`/administrator`} passHref>
+                            <button type="button" className={styles.addButton}>Back Administrator</button>
+                        </Link>
+
+                        <button type="button" className={styles.visitButton} onClick={handleVisit}>
                             Visit Restaurant
                         </button>
                     </div>
+                    <button type="submit" className={`${styles.addButton} ${styles.button}`}>
+                        Update Restaurant
+                    </button>
                 </form>
-                <div>
-                    <p>Restaurant ID: {restaurant._id}</p>
-                    <p>Owner ID: {restaurant.owner}</p>
-                </div>
-                <RestoMenuItem restaurantId={restaurant._id} ownerId={restaurant.owner} /> {/* Pass the IDs to RestoMenuItem */}
             </div>
         </>
     );

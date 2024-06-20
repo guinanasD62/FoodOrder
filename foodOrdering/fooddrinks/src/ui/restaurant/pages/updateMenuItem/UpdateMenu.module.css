@@ -1,0 +1,58 @@
+.container {
+    background-color: rgba(255, 192, 203, 0.171);
+    padding: 20px;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.container h1 {
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.input,
+.textarea {
+    padding: 15px;
+    background-color: var(--bg);
+    color: grey;
+    border: 1px solid rgba(255, 0, 0, 0.432);
+    border-radius: 5px;
+    margin-top: 5px;
+
+}
+
+.textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.addButton {
+    padding: 5px;
+    background-color: pink;
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 100px;
+    width: 37%;
+    height: 50px;
+}
+
+.addButton:hover {
+    background-color: darkred;
+    color: aliceblue;
+}

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearSession } from '@/redux/customerSlice/session';
+//import { clearSession } from '@/redux/customerSlice/session';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './RestoNavBar.module.css';

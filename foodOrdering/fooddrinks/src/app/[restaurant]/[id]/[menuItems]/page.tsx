@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import styles from "@/ui/restaurant/RestaurantAdmin.module.css";
-import Search from "@/ui/restaurant/Search/Search";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import styles from '@/ui/restaurant/pages/menuItems/MenuItems.module.css';
+import MenuitemsNavbar from "@/ui/restaurant/MenuitemsNavbar/MenuitemsNavbar";
 
 interface MenuItem {
     _id: string;
@@ -18,85 +18,154 @@ interface MenuItem {
     category?: string;
 }
 
-interface RestoMenuItemProps {
-    restaurantId: string;
-    ownerId: string;
-}
+// interface Restaurant {
+//     _id: string;
+//     name: string;
+//     email: string;
+//     address: string;
+//     phone: number;
+//     owner: string;
+//     createdAt: string;
+//     updatedAt: string;
+// }
 
-const RestoMenuItem = ({ restaurantId, ownerId }: RestoMenuItemProps) => {
+const RestoMenuItem = () => {
+    const searchParams = useSearchParams();
+    const restaurantId = searchParams.get('restaurantId');
+    const ownerId = searchParams.get('ownerId');
+
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const router = useRouter();
+
+    // const [restaurant, setRestaurant] = useState<Restaurant[]>([]);
+    // const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
+
+    // display resto
+    // useEffect(() => {
+    //     const fetchRestaurants = async () => {
+    //         try {
+    //             const response = await axios.get<{ data: Restaurant[] }>('http://localhost:3007/getrestaurants');
+    //             setRestaurant(response.data.data);
+    //             setLoading(false);
+    //         } catch (error) {
+    //             console.error("Failed to fetch restaurants", error);
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     fetchRestaurants();
+    // }, []);
+
+    // useEffect(() => {
+    //     if (restaurantId) {
+    //         const filtered = restaurant.filter(resto => resto._id === restaurantId);
+    //         setFilteredRestaurants(filtered);
+    //     }
+    // }, [restaurantId, restaurant]);
 
     const fetchMenuItems = async () => {
         try {
+            console.log("Fetching menu items...");
             const response = await axios.get('http://localhost:3007/getmenus');
-            console.log("Fetched data:", response.data.data); // Debugging log
-            const sortedMenuItems = response.data.data.sort((a: MenuItem, b: MenuItem) => {
-                if (a.restaurant && b.restaurant) {
-                    return a.restaurant.localeCompare(b.restaurant);
-                }
-                console.warn("Undefined restaurant in menu items", a, b); // Warn if undefined
-                return 0;
-            });
-            setMenuItems(sortedMenuItems);
-            setLoading(false);
+            console.log("Fetched data:", response.data.data);
+            const allMenuItems = response.data.data;
+            const filteredMenuItems = allMenuItems.filter((menuItem: MenuItem) => menuItem.restaurant === restaurantId);
+            setMenuItems(filteredMenuItems);
         } catch (error) {
             console.error("Error fetching menu items", error);
+        } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        fetchMenuItems();
-    }, []);
+    const handleDelete = async (id: string) => {
+        try {
+            await axios.delete(`http://localhost:3007/deletemenu/${id}`);
+            setMenuItems(menuItems.filter(menuItem => menuItem._id !== id));
+            alert("Menu deleted successfully");
+        } catch (error) {
+            console.error('Failed to delete menu', error);
+        }
+    };
 
-    const router = useRouter();
+    const handleUpdate = (menuItemId: string) => {
+        console.log(`Navigating to menu item with id: ${menuItemId} for restaurant: ${restaurantId}`);
+        router.push(`/restaurant/${restaurantId}/menuItems/${menuItemId}?restaurantId=${restaurantId}&menuItemId=${menuItemId}`);
+    };
+
+    useEffect(() => {
+        if (restaurantId) {
+            fetchMenuItems();
+        } else {
+            console.warn("No restaurantId found in searchParams");
+            setLoading(false);
+        }
+    }, [restaurantId]);
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div>
-            <h1>Restaurant Menus</h1>
-            <div>
+        <><MenuitemsNavbar />
+            <div className={styles.adminContainer}>
+                <h1>Restaurant Menus</h1>
+                {/* <div>
+                {filteredRestaurants.map((restaurant) => (
+                    <div key={restaurant._id}>
+                        <p>Resto name: {restaurant.name}</p>
+                    </div>
+                ))}
                 <p>Filtered by Restaurant ID: {restaurantId}</p>
-                <p>Filtered by Owner ID: {ownerId}</p>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Restaurant</th>
-                        <th>Category</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {menuItems
-                        .filter(menuItem => menuItem.restaurant === restaurantId) // Filter by restaurantId
-                        .map((menuItem) => (
-                            <tr key={menuItem._id}>
+            </div> */}
+
+                <table className={styles.table}>
+                    <thead className={styles.tableHead}>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Category</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody className={styles.tableBody}>
+                        {menuItems.map((menuItem) => (
+                            <tr key={menuItem._id} className={styles.tableRow}>
                                 <td>{menuItem.name}</td>
                                 <td>{menuItem.description}</td>
                                 <td>{menuItem.price}</td>
                                 <td>{menuItem.quantity}</td>
-                                <td>{menuItem.restaurant}</td>
                                 <td>{menuItem.category}</td>
                                 <td>
                                     <div>
-                                        {/* <button className={styles.update}>Update</button> */}
-                                        <button></button>
+                                        <button className={styles.updateButton} onClick={() => handleUpdate(menuItem._id)}>
+                                            Update
+                                        </button>
+                                        <button className={styles.deleteButton} onClick={() => handleDelete(menuItem._id)}>
+                                            Delete
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
                         ))}
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+
+                <div className={styles.addButtonContainer}>
+                    {/* <Link href={`/administrator`} passHref>
+                    <button type="button" className={styles.addButton}>
+                    Back Administrator</button>
+                </Link> */}
+                    <Link href={`/restaurant/${restaurantId}/menuItems/addMenuItem?restaurantId=${restaurantId}`}>
+
+                        <button className={styles.addButton}>
+                            Add New Menu</button>
+                    </Link>
+                </div>
+            </div></>
     );
 };
 
