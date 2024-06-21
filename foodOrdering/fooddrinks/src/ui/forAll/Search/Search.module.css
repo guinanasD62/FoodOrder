@@ -6,7 +6,9 @@
     padding: 10px;
     border-radius: 10px;
     width: 400px;
-    margin: 1rem;
+
+    margin-left: 2rem;
+
     /* max-content; */
 }
 
@@ -15,4 +17,6 @@
     border: none;
     color: var(--text);
     outline: none;
+    width: 400px;
+
 }

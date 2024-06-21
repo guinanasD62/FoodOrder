@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "@/ui/restaurant/RestaurantAdmin.module.css";
-import Search from "@/ui/restaurant/Search/Search";
+import Search from "@/ui/forAll/Search/Search";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

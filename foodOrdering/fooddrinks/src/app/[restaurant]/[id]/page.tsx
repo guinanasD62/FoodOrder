@@ -88,39 +88,41 @@ const UpdateResto = ({ params }: { params: Params }) => {
             <RestoNavbar setUserId={setUserId} />
             <div className={styles.container}>
                 <h4>Update Restaurant</h4>
-                <label>
+                <form onSubmit={handleUpdate}>
+
                     <input type="text" name="name" className={styles.brand} defaultValue={restaurant.name} />
-                </label>
 
-                <form onSubmit={handleUpdate} className={styles.form}>
-                    <br />
-                    <label>
-                        Email:
-                        <input type="email" name="email" defaultValue={restaurant.email} />
-                    </label>
-                    <br />
-                    <label>
-                        Address:
-                        <input type="text" name="address" defaultValue={restaurant.address} />
-                    </label>
-                    <br />
-                    <label>
-                        Phone:
-                        <input type="text" name="phone" defaultValue={restaurant.phone.toString()} />
-                    </label>
-                    <br />
-                    <div className={styles.button}>
-                        <Link href={`/administrator`} passHref>
-                            <button type="button" className={styles.addButton}>Back Administrator</button>
-                        </Link>
 
-                        <button type="button" className={styles.visitButton} onClick={handleVisit}>
-                            Visit Restaurant
+                    <form className={styles.form}>
+                        <br />
+                        <label>
+                            Email:
+                            <input type="email" name="email" defaultValue={restaurant.email} />
+                        </label>
+                        <br />
+                        <label>
+                            Address:
+                            <input type="text" name="address" defaultValue={restaurant.address} />
+                        </label>
+                        <br />
+                        <label>
+                            Phone:
+                            <input type="text" name="phone" defaultValue={restaurant.phone.toString()} />
+                        </label>
+                        <br />
+                        <div className={styles.button}>
+                            <Link href={`/administrator`} passHref>
+                                <button type="button" className={styles.addButton}>Back Administrator</button>
+                            </Link>
+
+                            <button type="button" className={styles.visitButton} onClick={handleVisit}>
+                                Visit Restaurant
+                            </button>
+                        </div>
+                        <button type="submit" className={`${styles.addButton} ${styles.button}`}>
+                            Update Restaurant
                         </button>
-                    </div>
-                    <button type="submit" className={`${styles.addButton} ${styles.button}`}>
-                        Update Restaurant
-                    </button>
+                    </form>
                 </form>
             </div>
         </>

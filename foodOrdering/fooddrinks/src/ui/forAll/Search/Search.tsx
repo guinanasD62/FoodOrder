@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/ui/restaurant/Search/Search.module.css';
+import styles from './Search.module.css';
 import { MdSearch } from 'react-icons/md';
 
 interface SearchProps {

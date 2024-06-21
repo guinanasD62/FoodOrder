@@ -19,7 +19,7 @@
     color: red;
     background-color: var(--bgSoft);
     font-size: 4rem;
-    margin: 1rem;
+
 
 
 }
@@ -43,6 +43,8 @@
 .form input,
 .form textarea,
 .form select {
+    margin: 1rem;
+    ;
     padding: 25px;
     background-color: var(--bg);
     color: grey;

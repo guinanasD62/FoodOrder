@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+
 import Slideshow from '@/ui/user/headBanner/UserMenu';
 import Navbar from '@/ui/user/navbar/NarBar';
-import Search from "@/ui/restaurant/Search/Search";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation";
+import style from '@/ui/user/userMain/userFoodCard.module.css';
 
 interface MenuItem {
     _id: string;
@@ -22,32 +20,55 @@ interface MenuItem {
     category?: string;
 }
 
-const UsersPage = () => {
+interface Restaurant {
+    _id: string;
+    name: string;
+    email: string;
+    address: string;
+    phone: number;
+    owner: string;
+}
+
+const UsersFoodPage = () => {
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-
-    const fetchMenuItems = async () => {
-        try {
-            const response = await axios.get('http://localhost:3007/getmenus');
-            console.log("Fetched data:", response.data.data); // Debugging log
-            const sortedMenuItems = response.data.data.sort((a: MenuItem, b: MenuItem) => {
-                if (a.restaurant && b.restaurant) {
-                    return a.restaurant.localeCompare(b.restaurant);
-                }
-                console.warn("Undefined restaurant in menu items", a, b); // Warn if undefined
-                return 0;
-            });
-            setMenuItems(sortedMenuItems);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching menu items", error);
-            setLoading(false);
-        }
-    };
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([])
 
     useEffect(() => {
+        const fetchMenuItems = async () => {
+            try {
+                const response = await axios.get('http://localhost:3007/getmenus');
+                console.log("Fetched menu items:", response.data.data); // Debug log
+                setMenuItems(response.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("failed to fetch menu Items", error);
+                setLoading(false);
+            }
+        };
         fetchMenuItems();
     }, []);
+
+    useEffect(() => {
+        const fetchRestaurants = async () => {
+            try {
+                const response = await axios.get('http://localhost:3007/getrestaurants');
+                console.log("Fetched restaurants:", response.data.data); // Debug log
+                setRestaurants(response.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("failed to fetch restaurants", error);
+                setLoading(false);
+            }
+        };
+        fetchRestaurants();
+    }, []);
+
+    const getRestaurantName = (restaurantId: string) => {
+        const restaurant = restaurants.find(resto => resto._id === restaurantId);
+        console.log("Finding restaurant for ID:", restaurantId, "Result:", restaurant); // Debug log
+        return restaurant ? restaurant.name : "Unknown Restaurant";
+    }
 
     const router = useRouter();
 
@@ -61,63 +82,30 @@ const UsersPage = () => {
             <Slideshow />
             <div>
                 <h1>Restaurant Menus</h1>
-                <div>
-                    <Search placeholder="Search for a menu ..." />
-                </div>
-                <div>
-                    <ImageList sx={{ width: 500, height: 450 }}>
-                        {menuItems.map((item) => (
-                            <ImageListItem key={item._id}>
-                                <img
-                                    srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    src={`${item.img}?w=248&fit=crop&auto=format`}
-                                    alt={item.name}
-                                    loading="lazy"
-                                />
-                                <ImageListItemBar
-                                    title={item.name}
-                                    subtitle={<span>Price: ${item.price}</span>}
-                                    position="below"
-                                />
-                            </ImageListItem>
-                        ))}
-                    </ImageList>
-                </div>
-                {/* <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Restaurant</th>
-                                <th>Category</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {menuItems.map((menuItem) => (
-                                <tr key={menuItem._id}>
-                                    <td>{menuItem.name}</td>
-                                    <td>{menuItem.description}</td>
-                                    <td>{menuItem.price}</td>
-                                    <td>{menuItem.quantity}</td>
-                                    <td>{menuItem.restaurant}</td>
-                                    <td>{menuItem.category}</td>
-                                    <td>
-                                        <div>
-                                            <button>Delete</button>
+                <div className={style.gridContainer}>
+                    {restaurants.map((restaurant) => (
+                        <div className={style.restaurantContainer} key={restaurant._id}>
+                            <h2 className={style.nameBanner}>{restaurant.name}</h2>
+                            <div className={style.cardContainer}>
+                                {menuItems.filter(menuItem => menuItem.restaurant === restaurant._id).map((menuItem) => (
+                                    <div className={style.card} key={menuItem._id}>
+                                        <img src='/pizzas.png' alt="Pizza" className={style.image} />
+                                        <div className={style.content}>
+                                            {/* <h6>{getRestaurantName(menuItem.restaurant)}</h6> */}
+                                            <h2>{menuItem.name}</h2>
+                                            <p>{menuItem.description}</p>
+                                            <p className={style.price}>${menuItem.price}</p>
+                                            <button className={style.button}>Add to Cart</button>
                                         </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div> */}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     );
 };
 
-export default UsersPage;
+export default UsersFoodPage;
