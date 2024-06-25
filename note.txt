@@ -69,9 +69,6 @@ admin
 list all users
  
  
-redux
-typescript
- 
  
 user address
 multiple delivery address
@@ -342,7 +339,7 @@ he is sincere but grief , too much to take
 ///
 it is a gift of God, th gift of present
 Ecc. 5:20
-gift of Godeffect our outlook of our life
+gift of God effect our outlook of our life
 time flies
 savor the moment
 yesterday is past
@@ -368,3 +365,67 @@ he will navigate, biggest adjustment this system to new world
 i am just a boy, i think i am not qualified
 5, touch my mouth, i have out my words in you mouth
 assuring jeremiah,
+
+to be fooled by Jah
+tailor made just for you
+please fool me oh Jehovah
+
+//Machinery
+Luke physician 
+Col3;14 beloved physicial, medical terms,  more than phusician healer heart
+Luke 4;38,39 luke noticeD she was suffering, 
+22;44 getsemane, caught his attention; drops of blood, condition, he was in such agony, Jesus agony not just medical some man as they where
+attitude Jesus toward people was recorded 
+
+1. beloved physicial
+2. filimon 24 fellow worker acts16.8 
+3. oil to machinery 
+
+Haitian Creole
+Nou renmen ou tou
+
+//
+Redux Simplified Explanation
+Store: A centralized place to manage the state of your application.
+Reducers: Functions that determine how the state should change in response to actions.
+Actions: Plain JavaScript objects that describe changes to the state.
+Dispatch: A method to send actions to the store.
+
+A slice is a collection of Redux reducer logic and actions for a single feature of your app.
+
+pending:
+toasterfy 
+forgot Reset
+invention 
+skeleton 
+global loader circular thing
+refresh page 
+redux cart
+debouncer
+multer
+
+24/6/24
+gen loader 
+multer = stock in showing
+meeting 3pm to 4pm
+
+///////////////
+
+permission
+permission 
+
+create user update the 
+pending task
+role base
+authenthiaction
+authorization
+
+giving permission to routes 
+creating users
+
+role base 
+create a user 
+you have provide permission
+permission to a particular route 
+
+25/06/24

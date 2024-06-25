@@ -1,0 +1,12 @@
+.loaderContainer {
+    display: flex;
+    position: absolute;
+    top: 0;
+    height: 100%;
+}
+
+.loaderContainer img {
+    display: inline-block;
+    margin: auto;
+    width: 200px;
+}

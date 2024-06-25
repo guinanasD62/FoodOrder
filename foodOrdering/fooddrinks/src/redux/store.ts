@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storageSession from 'redux-persist/lib/storage/session'; // defaults to sessionStorage for web
 import sessionReducer from './customerSlice/session';
+import cartReducer from './customerSlice/cartReducer';
 
 //
 const persistConfig = {
@@ -13,8 +14,8 @@ const persistedReducer = persistReducer(persistConfig, sessionReducer);
 
 export const store = configureStore({
     reducer: {
-        //
         session: persistedReducer,
+        cart: cartReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

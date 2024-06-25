@@ -7,12 +7,12 @@ import { RestaurantModel } from "../model/restaurant";
 // Add menu item
 export const addMenu = async (req: Request, res: Response) => {
     try {
-        const { name, description, price, quantity, img, restaurant, category } = req.body;
+        const { name, description, price, quantity, restaurant, category } = req.body;
+        const img = req.file ? req.file.filename : undefined;
 
-        // Check if the restaurant exists
+        console.log("Uploaded file:", req.file); // Add this line
+
         const restaurantExists = await RestaurantModel.findById(restaurant);
-        // console.log("resto ----------->", restaurant);
-        // console.log("restaurantExists ----------->", restaurantExists);
 
         if (!restaurantExists) {
             return res.status(404).json({ message: "Restaurant not found" });
@@ -29,12 +29,14 @@ export const addMenu = async (req: Request, res: Response) => {
         });
 
         await menu.save();
+        console.log(`New menu item created with image: ${img}`);
         return res.status(201).json({ message: "New menu item created!", data: menu });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error creating menu item" });
     }
 };
+
 
 // Get all menu items
 export const getAllMenu = async (req: Request, res: Response) => {
@@ -65,17 +67,23 @@ export const getMenu = async (req: Request, res: Response) => {
 // Update menu item
 export const updateMenu = async (req: Request, res: Response) => {
     try {
-        const { id, restaurant } = req.params;
+        const { id } = req.params;
+        const { name, description, price, quantity, category, restaurant } = req.body;
+        const img = req.file ? req.file.filename : undefined;
 
+        const updateData: any = { name, description, price, quantity, category, restaurant };
+        if (img) {
+            updateData.img = img;
+        }
 
-
-        const menu = await MenuModel.findByIdAndUpdate(id, req.body, { new: true });
+        const menu = await MenuModel.findByIdAndUpdate(id, updateData, { new: true });
         if (!menu) {
             return res.status(404).json({ message: "No menu item found." });
         }
 
         res.status(200).json(menu);
     } catch (error) {
+        console.error("Error updating menu item:", error);
         res.status(500).json({ message: "Error updating menu item" });
     }
 };

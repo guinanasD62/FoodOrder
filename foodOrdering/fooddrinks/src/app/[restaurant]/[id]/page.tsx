@@ -75,7 +75,7 @@ const UpdateResto = ({ params }: { params: Params }) => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    // if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
     if (!restaurant) return <div>Restaurant not found</div>;
 

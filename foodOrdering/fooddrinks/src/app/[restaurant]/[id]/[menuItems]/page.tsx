@@ -103,9 +103,9 @@ const RestoMenuItem = () => {
         }
     }, [restaurantId]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
     return (
         <><MenuitemsNavbar />
@@ -123,6 +123,7 @@ const RestoMenuItem = () => {
                 <table className={styles.table}>
                     <thead className={styles.tableHead}>
                         <tr>
+                            {/* <th>image</th> */}
                             <th>Name</th>
                             <th>Description</th>
                             <th>Price</th>
@@ -134,6 +135,7 @@ const RestoMenuItem = () => {
                     <tbody className={styles.tableBody}>
                         {menuItems.map((menuItem) => (
                             <tr key={menuItem._id} className={styles.tableRow}>
+                                {/* <td>{menuItem.img}</td> */}
                                 <td>{menuItem.name}</td>
                                 <td>{menuItem.description}</td>
                                 <td>{menuItem.price}</td>

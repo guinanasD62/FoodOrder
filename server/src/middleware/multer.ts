@@ -1,9 +1,10 @@
+// middleware/multer.js
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-// Set the uploads directory relative to the server root, not the current file location
-const uploadsDir = path.join(__dirname, '../uploads'); // Adjusted path to one level up
+// Set the uploads directory relative to the server root
+const uploadsDir = path.join(__dirname, '../uploads');
 
 // Ensure the uploads directory exists
 if (!fs.existsSync(uploadsDir)) {
@@ -13,21 +14,18 @@ if (!fs.existsSync(uploadsDir)) {
 // Set storage engine
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, uploadsDir); // The destination is now correctly pointing to 'uploads/'
+        cb(null, uploadsDir);
     },
     filename: function (req, file, cb) {
-        // Save with the fieldname, timestamp, and original extension
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
 
 // Check File Type
+// const checkFileType = (file, cb) => {
 const checkFileType = (file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-    // Allowed extensions for images
     const filetypes = /jpeg|jpg|png|gif/;
-    // Check extension
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    // Check mime type
     const mimetype = filetypes.test(file.mimetype);
 
     if (mimetype && extname) {

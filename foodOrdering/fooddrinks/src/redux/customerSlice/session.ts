@@ -1,3 +1,4 @@
+// redux/customerSlice/session.js
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
@@ -5,8 +6,7 @@ interface User {
   email: string;
   role: string;
   name: string;
-  isAdmin?: boolean;
-  isActive?: boolean;
+  address: string;
 }
 
 interface SessionState {

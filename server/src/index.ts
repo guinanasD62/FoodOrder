@@ -7,6 +7,8 @@ import cartRoutes from "./routes/cart.routes";
 import cors from 'cors';
 import menuItemRoutes from "./routes/menuItem.routes";
 import orderRoutes from "./routes/order.routes";
+import path from 'path';
+
 const connectDB = require('./config/db')
 
 const app = express();
@@ -23,6 +25,7 @@ app.use(cors({
     optionsSuccessStatus: 200
 }));
 
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // routes
 app.use("/", userRoutes);

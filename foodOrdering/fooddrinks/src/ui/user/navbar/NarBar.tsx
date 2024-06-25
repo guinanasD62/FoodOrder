@@ -12,6 +12,11 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 import Search from "@/ui/forAll/Search/Search";
+import LogoutButton from "@/ui/forAll/LogoutBtn/LogoutBtn";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectCartCount } from "@/redux/customerSlice/cartReducer";
+import { RootState } from "@/redux/store";
 type MenuItem = {
     title: string;
     path: string;
@@ -46,18 +51,31 @@ type MenuCategory = {
 //     },
 // ];
 
-const Navbar: React.FC = () => {
+interface RestoNavbarProps {
+    setUserId: (userId: string) => void;
+}
+
+const Navbar: React.FC<RestoNavbarProps> = ({ setUserId }) => {
     // const cartCount = useSelector((state: RootState) => selectCartCount(state));
     // const { isAuthenticated } = useAuth();
     const router = useRouter();
+    const user = useSelector((state: any) => state.session.user);
+    const isAuthenticated = useSelector((state: any) => state.session.isAuthenticated);
+    const cartCount = useSelector((state: RootState) => selectCartCount(state));
 
     const handleCartClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        // if (!isAuthenticated) {
-        e.preventDefault();
-        router.push('/login');
-        // }
+        if (!isAuthenticated) {
+            e.preventDefault();
+            router.push('/login');
+        }
     };
 
+
+    useEffect(() => {
+        if (user && isAuthenticated) {
+            setUserId(user.id);
+        }
+    }, [user, isAuthenticated, setUserId]);
 
     return (
         <div className={styles.container}>
@@ -72,14 +90,26 @@ const Navbar: React.FC = () => {
                     {/* <li><Link href="/customer/products" className={styles.containerCustomer}>Products</Link></li> */}
                     <li>
                         <Link href="/user/cart" className={styles.containerCustomer} onClick={handleCartClick}>
-                            Cart
+                            Cart  {cartCount > 0 && `(${cartCount})`}
                             {/* View Cart {cartCount > 0 && `(${cartCount})`} */}
                             <IconButton color="inherit">
                                 <ShoppingCartIcon />
                             </IconButton>
                         </Link>
                     </li>
-                    <li><Link href="/login" className={styles.containerCustomer}>Login</Link></li>
+                    {/* <li><Link href="/login" className={styles.containerCustomer}>Login</Link></li>
+                    <LogoutButton /> */}
+
+                    {isAuthenticated && user ? (
+                        <div className={styles.containerCustomer}>
+                            Hello, {user.name} (ID: {user.id}) (Role: {user.role}) (Add: {user.address})
+                            <LogoutButton />
+                        </div>
+                    ) : (
+                        <Link href="/login" className={styles.logout}>
+                            Login
+                        </Link>
+                    )}
                 </ul>
             </nav>
         </div>

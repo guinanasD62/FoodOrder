@@ -43,6 +43,7 @@ const LoginForm: React.FC = () => {
                         name: response.data.user.name,
                         email: response.data.user.email,
                         role: response.data.user.role,
+                        address: response.data.user.address,
                     }
                 }));
 
