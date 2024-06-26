@@ -106,7 +106,8 @@ const UsersFoodPage = () => {
                             <h2 className={style.nameBanner}>{restaurant.name}</h2>
                             <div className={style.cardContainer}>
                                 {menuItems.filter(menuItem => menuItem.restaurant === restaurant._id).map((menuItem) => {
-                                    const imageUrl = `http://localhost:3007/uploads/${menuItem.img}`;
+                                    // const imageUrl = menuItem.img ? `http://localhost:3007/uploads/${menuItem.img}` : '/pizzas.png';
+                                    const imageUrl = '/pizzas.png';
                                     console.log(`Image URL for ${menuItem.name}:`, imageUrl); // Add this line
                                     return (
                                         <div className={style.card} key={menuItem._id}>
@@ -115,7 +116,7 @@ const UsersFoodPage = () => {
                                                 alt={menuItem.name}
                                                 className={style.image}
                                             />
-                                            <p>{menuItem.img}</p>
+                                            {/* <p>{menuItem.img}</p> */}
                                             <div className={style.content}>
                                                 <h2>{menuItem.name}</h2>
                                                 <p>{menuItem.description}</p>

@@ -45,11 +45,16 @@ const cartSlice = createSlice({
                 state.totalAmount -= existingItem.menuItem.price * existingItem.quantity;
                 state.items.splice(existingItemIndex, 1);
             }
+        },
+
+        clearCart(state) {
+            state.items = [];
+            state.totalAmount = 0;
         }
     }
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 
 // Selector to get cart items
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;

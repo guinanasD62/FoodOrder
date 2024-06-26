@@ -102,7 +102,8 @@ const Navbar: React.FC<RestoNavbarProps> = ({ setUserId }) => {
 
                     {isAuthenticated && user ? (
                         <div className={styles.containerCustomer}>
-                            Hello, {user.name} (ID: {user.id}) (Role: {user.role}) (Add: {user.address})
+                            Hello, {user.name} (ID: {user.id}) (Role: {user.role})
+                            {/* (Add: {user.address}) */}
                             <LogoutButton />
                         </div>
                     ) : (

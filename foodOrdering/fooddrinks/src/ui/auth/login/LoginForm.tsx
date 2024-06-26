@@ -65,7 +65,7 @@ const LoginForm: React.FC = () => {
         <div className={styles.container}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <h1>Login</h1>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+
                 <div>
                     <label htmlFor="email">Email</label>
                     <input
@@ -95,6 +95,7 @@ const LoginForm: React.FC = () => {
                         }}
                     />
                     {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                 </div>
                 <button type="submit">Login</button>
                 <br /><br />

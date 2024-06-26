@@ -428,4 +428,22 @@ create a user
 you have provide permission
 permission to a particular route 
 
+
 25/06/24
+reduxx 
+similar with password
+enter the email verified 
+password will show
+
+directly show
+able change
+user can change
+
+Dili ta kinahanglang maghulat ug Paraiso una ta maningkamot nga mahimong matang sa tawo nga gusto ni Jehova nga papuy-on didto. Karon pa lang, maningkamot na ta nga magmatinud-anon sa atong sinultihan ug binuhatan ug magmabalanse sa atong pagkinabuhi
+
+26/6/24
+modify cart component 
+inventory 
+update redux cart reducer
+ 
+ 
