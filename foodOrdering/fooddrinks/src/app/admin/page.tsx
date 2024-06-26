@@ -5,7 +5,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styles from '@/ui/admindashboard/admin/Admin.module.css';
 import Link from 'next/link';
-import { useAuth } from '@/auth/auth-context'; // Ensure the correct path
+import { useAuth } from '@/auth/auth-context';
+import withRole from '@/auth/withRole';
 // import PrivateRoute from '@/auth/private-route';
 
 interface User {
@@ -113,4 +114,4 @@ const UsersPage: React.FC = () => {
     );
 };
 
-export default UsersPage;
+export default withRole(UsersPage, 'adminAdmin');

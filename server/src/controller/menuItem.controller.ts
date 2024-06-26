@@ -41,6 +41,7 @@ export const addMenu = async (req: Request, res: Response) => {
 // Get all menu items
 export const getAllMenu = async (req: Request, res: Response) => {
     try {
+
         const menu = await MenuModel.find();
         return res.status(200).json({ data: menu });
     } catch (error) {

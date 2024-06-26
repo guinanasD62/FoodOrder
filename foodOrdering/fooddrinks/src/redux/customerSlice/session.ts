@@ -1,10 +1,9 @@
-// redux/customerSlice/session.js
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
   id: string;
   email: string;
-  role: string;
+  role: 'adminAdmin' | 'admin' | 'user';
   name: string;
   address: string;
 }

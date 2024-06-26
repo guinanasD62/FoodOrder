@@ -6,10 +6,19 @@ import { useRouter } from 'next/navigation';
 import { RootState } from '../redux/store';
 import { loginSuccess, clearSession } from '../redux/customerSlice/session';
 
+type User = {
+  id: string;
+  email: string;
+  role: 'adminAdmin' | 'admin' | 'user';
+  name: string;
+  address: string;
+};
+
+
 type AuthContextType = {
   isAuthenticated: boolean;
-  user: any;
-  login: (token: string, user: any) => void;
+  user: User | null;
+  login: (token: string, user: User) => void;
   logout: () => void;
 };
 
@@ -21,7 +30,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const { token, isAuthenticated, user } = useSelector((state: RootState) => state.session);
   const router = useRouter();
 
-  const login = (token: string, user: any) => {
+  const login = (token: string, user: User) => {
     dispatch(loginSuccess({ token, user }));
   };
 

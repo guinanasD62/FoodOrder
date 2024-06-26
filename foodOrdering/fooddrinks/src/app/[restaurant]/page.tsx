@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from '@/ui/restaurant/pages/Main/MainResto.module.css';
+import withRole from '@/auth/withRole';
 
 interface Restaurant {
     _id: string;
@@ -121,4 +122,4 @@ const AdminRestaurants = () => {
     );
 };
 
-export default AdminRestaurants;
+export default withRole(AdminRestaurants, 'admin');

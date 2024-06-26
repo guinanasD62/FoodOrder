@@ -1,12 +1,10 @@
 import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import Router from 'next/router';
-
 import ReduxProvider from '@/redux/redux-provider';
 import { AuthProvider } from '@/auth/auth-context';
 import '@/styles/globals.css';
 import Loading from './loading';
-
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [loading, setLoading] = useState(false);

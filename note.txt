@@ -443,9 +443,22 @@ Dili ta kinahanglang maghulat ug Paraiso una ta maningkamot nga mahimong matang 
 
 26/6/24
 modify cart component 
-inventory 
+inventory : modify user cart
+
 update redux cart reducer
  
+modify auth-context 
+ Higher-Order Component (HOC) for Role-Based Route Protection
+ Protect Specific Routes with the HOC
+Create an Unauthorized page
+
+
  Sumala sa Salmo 55, siya hilabihang nahasol sa kabalaka tungod sa mga kapit-os ug pagkamabatokon sa iyang mga kaaway. Mibati siya ug tumang kaguol ug kahadlok. Makaagulo lamang siya sa iyang kasub-anan. (Salmo 55:2, 5, 17)
  
  Busa, bisan unsa man ang imong kahimtang, matod ni David, kanunayng itugyan ang imong palas-anon kang Jehova. Unya atong masinati ang kamatuoran sa saad: “Siya mismo magasapnay kanimo. Dili niya tugotan nga matarog ang matarong.”​—Salmo 55:22.
+
+
+55:22. Sa unsang paagi nato itugyan ang atong palas-anon kang Jehova? Buhaton nato kini (1) pinaagi sa pag-ampo bahin niana, (2) pinaagi sa pagsalig sa iyang Pulong ug organisasyon alang sa giya ug tabang, ug (3) pinaagi sa pagbuhat kutob sa atong maarangan aron mogaan ang maong kahimtang o molihok uyon sa pag-ampo.
+
+oct 29
+
