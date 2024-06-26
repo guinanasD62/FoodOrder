@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 const orderSchema = new mongoose.Schema({
+
     customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -27,7 +28,7 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ["pending", "confirmed", "cancelled"],
-        default: "pending"
+        default: "confirmed"
     },
     ordered_at: {
         type: Date,

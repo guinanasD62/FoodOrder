@@ -18,17 +18,6 @@ interface MenuItem {
     category?: string;
 }
 
-// interface Restaurant {
-//     _id: string;
-//     name: string;
-//     email: string;
-//     address: string;
-//     phone: number;
-//     owner: string;
-//     createdAt: string;
-//     updatedAt: string;
-// }
-
 const RestoMenuItem = () => {
     const searchParams = useSearchParams();
     const restaurantId = searchParams.get('restaurantId');
@@ -37,32 +26,6 @@ const RestoMenuItem = () => {
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
-
-    // const [restaurant, setRestaurant] = useState<Restaurant[]>([]);
-    // const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
-
-    // display resto
-    // useEffect(() => {
-    //     const fetchRestaurants = async () => {
-    //         try {
-    //             const response = await axios.get<{ data: Restaurant[] }>('http://localhost:3007/getrestaurants');
-    //             setRestaurant(response.data.data);
-    //             setLoading(false);
-    //         } catch (error) {
-    //             console.error("Failed to fetch restaurants", error);
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     fetchRestaurants();
-    // }, []);
-
-    // useEffect(() => {
-    //     if (restaurantId) {
-    //         const filtered = restaurant.filter(resto => resto._id === restaurantId);
-    //         setFilteredRestaurants(filtered);
-    //     }
-    // }, [restaurantId, restaurant]);
 
     const fetchMenuItems = async () => {
         try {
@@ -111,14 +74,7 @@ const RestoMenuItem = () => {
         <><MenuitemsNavbar />
             <div className={styles.adminContainer}>
                 <h1>Restaurant Menus</h1>
-                {/* <div>
-                {filteredRestaurants.map((restaurant) => (
-                    <div key={restaurant._id}>
-                        <p>Resto name: {restaurant.name}</p>
-                    </div>
-                ))}
-                <p>Filtered by Restaurant ID: {restaurantId}</p>
-            </div> */}
+
 
                 <table className={styles.table}>
                     <thead className={styles.tableHead}>
@@ -157,15 +113,15 @@ const RestoMenuItem = () => {
                 </table>
 
                 <div className={styles.addButtonContainer}>
-                    {/* <Link href={`/administrator`} passHref>
-                    <button type="button" className={styles.addButton}>
-                    Back Administrator</button>
-                </Link> */}
+
                     <Link href={`/restaurant/${restaurantId}/menuItems/addMenuItem?restaurantId=${restaurantId}`}>
 
                         <button className={styles.addButton}>
                             Add New Menu</button>
                     </Link>
+                    {/* <Link href={`/restaurant/${restaurantId}/menuItems/viewOrders?restaurantId=${restaurantId}`} passHref>
+                        <button type="button" className={styles.addButton}>View Orders</button>
+                    </Link> */}
                 </div>
             </div></>
     );

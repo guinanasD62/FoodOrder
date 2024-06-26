@@ -61,11 +61,53 @@ const UserCart = () => {
     };
 
     const handlePlaceOrder = async () => {
-        for (const item of cartItems) {
-            await handleUpdate(item.menuItem.id, item.quantity);
+        if (!user) {
+            setError("User not logged in");
+            return;
         }
-        dispatch(clearCart());
-        router.push(`/user`);
+
+        try {
+            const orderItems = cartItems.map(item => ({
+                menuItem: item.menuItem.id,
+                quantity: item.quantity
+            }));
+
+            const orderData = {
+                customer: user.id,
+                items: orderItems,
+                totalAmount: totalAmount
+            };
+
+            // Send POST request to add order
+            const response = await axios.post('http://localhost:3007/addorder', orderData);
+
+            if (response.status === 201) {
+                console.log('Order placed successfully', response.data);
+
+                // Clear the cart
+                dispatch(clearCart());
+
+                // Navigate to user page
+                router.push(`/user`);
+            } else {
+                throw new Error("Failed to place order");
+            }
+        } catch (error) {
+            console.error("Failed to place order", error);
+            setError("Failed to place order");
+        }
+    };
+
+    const combinedClickHandler = async () => {
+        try {
+            for (const item of cartItems) {
+                await handleUpdate(item.menuItem.id, item.quantity);
+            }
+            await handlePlaceOrder();
+        } catch (error) {
+            setError("error");
+            console.log(error);
+        }
     };
 
     if (error) return <div>{error}</div>;
@@ -109,7 +151,7 @@ const UserCart = () => {
                     <Typography>No items in the cart</Typography>
                 )}
                 <Typography variant="h5">Total Amount: ${totalAmount.toFixed(2)}</Typography>
-                <Button variant="contained" sx={{ mr: 1 }} onClick={handlePlaceOrder}>Place Order</Button>
+                <Button variant="contained" sx={{ mr: 1 }} onClick={combinedClickHandler}>Place Order</Button>
             </Box>
         </Box>
     );

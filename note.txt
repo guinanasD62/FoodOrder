@@ -446,4 +446,6 @@ modify cart component
 inventory 
 update redux cart reducer
  
+ Sumala sa Salmo 55, siya hilabihang nahasol sa kabalaka tungod sa mga kapit-os ug pagkamabatokon sa iyang mga kaaway. Mibati siya ug tumang kaguol ug kahadlok. Makaagulo lamang siya sa iyang kasub-anan. (Salmo 55:2, 5, 17)
  
+ Busa, bisan unsa man ang imong kahimtang, matod ni David, kanunayng itugyan ang imong palas-anon kang Jehova. Unya atong masinati ang kamatuoran sa saad: “Siya mismo magasapnay kanimo. Dili niya tugotan nga matarog ang matarong.”​—Salmo 55:22.

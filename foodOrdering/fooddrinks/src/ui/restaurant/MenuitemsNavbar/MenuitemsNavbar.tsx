@@ -60,15 +60,20 @@ const MenuitemsNavbar = () => {
                         </div>
                     ))}
                 </div>
-                <div className={styles.containerCustomer}>
+                <div >
                     <p>Restaurant ID: {restaurantId}</p>
+                </div>
+                <div className={styles.containerCustomer}>
+                    <Link href={`/restaurant/${restaurantId}/menuItems/viewOrders?restaurantId=${restaurantId}`} passHref>
+                        <button type="button" className={styles.addButton}>View Orders</button>
+                    </Link>
 
-                    <div>
-                        <Link href={`/administrator`} passHref>
-                            <button type="button" className={styles.addButton}>Back Administrator</button>
-                        </Link>
-                        <LogoutButton />
-                    </div>
+                    <Link href={`/administrator`} passHref>
+                        <button type="button" className={styles.addButton}>Back Administrator</button>
+                    </Link>
+
+                    <LogoutButton />
+
                 </div>
             </div>
         </div>
