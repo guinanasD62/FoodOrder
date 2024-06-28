@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import styles from "@/ui/restaurant/pages/idUpdate/Update.Resto.module.css";
 import Link from "next/link";
 import RestoNavbar from "@/ui/restaurant/RestoNavBar/RestoNavBar";
+import { useSelector } from 'react-redux';
 
 interface RestaurantData {
     _id: string;
@@ -29,9 +30,14 @@ const UpdateResto = ({ params }: { params: Params }) => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const [userId, setUserId] = useState<string | null>(null);
+    const token = useSelector((state: any) => state.session.token); // Access the token from the Redux store
 
     const fetchRestaurant = async (id: string): Promise<RestaurantData> => {
-        const response = await axios.get(`http://localhost:3007/getrestaurant/${id}`);
+        const response = await axios.get(`http://localhost:3007/getrestaurant/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Include the token in the authorization header
+            },
+        });
         return response.data.data;
     };
 
@@ -50,7 +56,7 @@ const UpdateResto = ({ params }: { params: Params }) => {
         };
 
         loadRestaurant();
-    }, [id]);
+    }, [id, token]);
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -66,7 +72,11 @@ const UpdateResto = ({ params }: { params: Params }) => {
         };
 
         try {
-            await axios.put(`http://localhost:3007/updaterestaurant/${id}`, updatedRestaurant);
+            await axios.put(`http://localhost:3007/updaterestaurant/${id}`, updatedRestaurant, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include the token in the authorization header
+                },
+            });
             alert("Restaurant updated successfully");
             router.push(`/restaurant/${id}`);
         } catch (error) {
@@ -75,7 +85,7 @@ const UpdateResto = ({ params }: { params: Params }) => {
         }
     };
 
-    // if (loading) return <div>Loading...</div>;
+    if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
     if (!restaurant) return <div>Restaurant not found</div>;
 
@@ -89,9 +99,7 @@ const UpdateResto = ({ params }: { params: Params }) => {
             <div className={styles.container}>
                 <h4>Update Restaurant</h4>
                 <form onSubmit={handleUpdate}>
-
                     <input type="text" name="name" className={styles.brand} defaultValue={restaurant.name} />
-
 
                     <form className={styles.form}>
                         <br />

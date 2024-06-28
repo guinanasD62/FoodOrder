@@ -12,7 +12,7 @@ const UnauthorizedPage: React.FC = () => {
             p={2}
         >
             <Typography variant="h3" color="error" align="center">
-                Forbidden. You need permission to access  this page.
+                Forbidden. You need permission contact Admin.
             </Typography>
         </Box>
     );

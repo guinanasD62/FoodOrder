@@ -58,7 +58,9 @@ const AdminRestaurants = () => {
             setRestaurant(restaurant.filter(restaurant => restaurant._id !== id));
             alert("Restaurant deleted successfully");
         } catch (err) {
+
             console.error('Failed to delete restaurant', err);
+            router.push(`/forbidden`);
             setError('Failed to delete restaurant');
         }
     };

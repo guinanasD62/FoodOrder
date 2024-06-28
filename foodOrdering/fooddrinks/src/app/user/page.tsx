@@ -98,14 +98,6 @@ const UsersFoodPage = () => {
 
     const router = useRouter();
 
-    // if (loading) {
-    //     return (
-    //         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    //             <CircularProgress />
-    //         </Box>
-    //     );
-    // }
-
     return (
         <>
             <Navbar setUserId={setUserId} />
