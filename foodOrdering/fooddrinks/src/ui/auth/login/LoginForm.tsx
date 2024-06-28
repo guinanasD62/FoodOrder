@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -34,19 +34,20 @@ const LoginForm: React.FC = () => {
                 email,
                 password,
             });
-            console.log('API response: --->', response.data);
-            if (response.data.token && response.data.user) {
-                dispatch(loginSuccess({
-                    token: response.data.token,
-                    user: {
-                        id: response.data.user._id,
-                        name: response.data.user.name,
-                        email: response.data.user.email,
-                        role: response.data.user.role,
-                        address: response.data.user.address,
-                        permissions: response.data.user.address,
-                    }
 
+            if (response.data.token && response.data.user) {
+                const { user, token } = response.data;
+
+                dispatch(loginSuccess({
+                    token,
+                    user: {
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                        address: user.address,
+                        permissions: user.permissions, // Ensure permissions are correctly set
+                    }
                 }));
 
                 // Redirect based on role 

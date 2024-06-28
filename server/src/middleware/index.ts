@@ -46,7 +46,7 @@ export const generateToken = (userId: string, permissions: string): string => {
     }
     console.log('id--->', userId);
     // permissions: permissions  console.log('permissions--->', permissions);
-    return jwt.sign({ id: userId }, secret, { expiresIn: '1h' });
+    return jwt.sign({ id: userId, permissions: permissions }, secret, { expiresIn: '1h' });
 };
 
 // //are allowed to access a specific route.
@@ -95,31 +95,17 @@ export const auth = (roles: any = []) => {
     }
 }
 
-// const permissionCheck = (requiredPermissions: any[]) => {
-//     return (req: Request, res: Response, next: NextFunction) => {
-//         if (!req.user || !req.user.permissions) {
-//             return res.status(403).json({ message: "Forbiddenn" });
-//         }
-
-//         const userPermissions = req.user.permissions;
-
-//         const hasPermission = requiredPermissions.every(permission =>
-//             userPermissions.includes(permission)
-//         );
-
-//         if (!hasPermission) {
-//             return res.status(403).json({ message: "Forbiddennn" });
-//         }
-
-//         next();
-//     };
-// };
-
-// export default permissionCheck;
 
 // middleware/permissionCheck.js
+type Role = 'adminAdmin' | 'admin' | 'user';
 
-const permissionCheck = (requiredPermissions: (keyof typeof Permissions)[]) => {
+const rolePermissions: Record<Role, string[]> = {
+    adminAdmin: ['ADD_RESTAURANT', 'VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT', 'DELETE_RESTAURANT'],
+    admin: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT'],
+    user: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT']
+};
+
+const permissionCheck = (requiredPermissions: string[]) => {
     return (req: CustomRequest, res: Response, next: NextFunction) => {
         if (!req.user || !req.user.permissions) {
             return res.status(403).json({ message: "Forbiddenn" });
@@ -130,18 +116,47 @@ const permissionCheck = (requiredPermissions: (keyof typeof Permissions)[]) => {
         const hasPermission = requiredPermissions.every(permission =>
             userPermissions.includes(permission)
         );
+
+        console.log("user --->", User);
+
         console.log("userPermissions --->", userPermissions);
+        console.log("hasPermission --->", hasPermission);
 
-        // if (!hasPermission) {
-
-        //     return res.status(403).json({ message: "Forbiddennn" });
-        // }
+        if (!hasPermission) {
+            return res.status(403).json({ message: "Forbiddennn" });
+        }
 
         next();
     };
 };
 
 export default permissionCheck;
+
+
+// const permissionCheck = (requiredPermissions: (keyof typeof Permissions)[]) => {
+//     return (req: CustomRequest, res: Response, next: NextFunction) => {
+//         if (!req.user || !req.user.permissions) {
+//             return res.status(403).json({ message: "Forbiddenn" });
+//         }
+
+//         const userPermissions = req.user.permissions;
+
+//         const hasPermission = requiredPermissions.every(permission =>
+//             userPermissions.includes(permission)
+//         );
+//         console.log("userPermissions --->", userPermissions);
+//         console.log(">", hasPermission);
+
+//         if (!hasPermission) {
+
+//             return res.status(403).json({ message: "Forbiddennn" });
+//         }
+
+//         next();
+//     };
+// };
+
+// export default permissionCheck;
 
 /**
 

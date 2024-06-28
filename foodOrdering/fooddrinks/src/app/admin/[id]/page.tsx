@@ -5,13 +5,22 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styles from '@/ui/admindashboard/admin/PerID.module.css';
 
+type Role = 'adminAdmin' | 'admin' | 'user';
+
+const rolePermissions: Record<Role, string[]> = {
+    adminAdmin: ['ADD_RESTAURANT', 'VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT', 'DELETE_RESTAURANT'],
+    admin: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT'],
+    user: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT']
+};
+
 interface User {
     _id: string;
     name: string;
     email: string;
     phone: string;
     address: string;
-    role: string;
+    role: Role;
+    permissions: string[];
     img?: string;
 }
 
@@ -38,17 +47,41 @@ const SingleUserPage = ({ params }: { params: Params }) => {
         fetchUser();
     }, [id]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (user) {
-            setUser({ ...user, [e.target.name]: e.target.value });
-        }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+
+        setUser(prevUser => {
+            if (!prevUser) return prevUser;
+
+            let updatedUser = { ...prevUser, [name]: value };
+
+            if (name === 'role') {
+                const newRole = value as Role;
+                updatedUser = {
+                    ...updatedUser,
+                    role: newRole,
+                    permissions: rolePermissions[newRole]
+                };
+            }
+
+            return updatedUser;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) return;
+
         try {
-            const response = await axios.put(`http://localhost:3007/updateuser/${user._id}`, user);
+            const { _id, name, email, phone, address, role, permissions } = user;
+            const response = await axios.put(`http://localhost:3007/updateuser/${_id}`, {
+                name,
+                email,
+                phone,
+                address,
+                role,
+                permissions
+            });
             setUser(response.data.data);
             router.push('/admin');
         } catch (error: any) {
@@ -102,20 +135,24 @@ const SingleUserPage = ({ params }: { params: Params }) => {
                             className={styles.input}
                         />
                         <label className={styles.label} htmlFor="role">Role</label>
-                        <input
+                        <select
                             id="role"
                             name="role"
                             value={user.role}
                             onChange={handleChange}
                             required
                             className={styles.input}
-                        />
+                        >
+                            <option value="adminAdmin">Admin Admin</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
                         <button type="submit" className={styles.button}>Update</button>
                     </form>
                 )}
             </div>
         </div>
     );
-}
+};
 
 export default SingleUserPage;

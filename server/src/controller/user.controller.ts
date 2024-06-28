@@ -5,10 +5,22 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = "mysecretkey";
 
-// Register user
+type Role = 'adminAdmin' | 'admin' | 'user';
+
+const rolePermissions: Record<Role, string[]> = {
+    adminAdmin: ['ADD_RESTAURANT', 'VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT', 'DELETE_RESTAURANT'],
+    admin: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT'],
+    user: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT']
+};
+
 export const addUser = async (req: Request, res: Response) => {
     try {
-        const { name, email, img, phone, address, password, role, permissions, created_at } = req.body;
+        const { name, email, img, phone, address, password, role } = req.body;
+
+        // Ensure role is of type Role
+        const typedRole: Role = role as Role;
+
+        const permissions = rolePermissions[typedRole] || [];
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -19,9 +31,8 @@ export const addUser = async (req: Request, res: Response) => {
             phone,
             address,
             password: hashedPassword,
-            role,
+            role: typedRole,
             permissions, // Include permissions here
-            created_at
         });
 
         await user.save();
@@ -31,6 +42,7 @@ export const addUser = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Error creating user" });
     }
 };
+
 
 // Get all users
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -65,35 +77,40 @@ export const findById = async (id: any) => {
     }
 };
 
-// Update user
 // export const updateUser = async (req: Request, res: Response) => {
 //     try {
-
 //         const { id } = req.params;
-//         const user = await User.findByIdAndUpdate(id, req.body);
+//         const { password, ...otherUpdates } = req.body;
+
+//         let updatedFields = otherUpdates;
+
+//         if (password) {
+//             const hashedPassword = await bcrypt.hash(password, 10);
+//             updatedFields = { ...updatedFields, password: hashedPassword };
+//         }
+
+//         const user = await User.findByIdAndUpdate(id, updatedFields, { new: true });
 
 //         if (!user) {
 //             return res.status(404).json({ message: "No user found." });
 //         }
 
-//         const updateUser = await User.findById(id);
-//         res.status(200).json(updateUser);
-
+//         res.status(200).json(user);
 //     } catch (error) {
-//         res.status(500).json({ message: "error updating user" });
+//         res.status(500).json({ message: "Error updating user" });
 //     }
-
 // };
+
 export const updateUser = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { password, ...otherUpdates } = req.body;
+        const { password, ...otherUpdates } = req.body; // Exclude password from other updates
 
-        let updatedFields = otherUpdates;
+        let updatedFields = { ...otherUpdates }; // Start with other updates
 
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            updatedFields = { ...updatedFields, password: hashedPassword };
+            updatedFields = { ...updatedFields, password: hashedPassword }; // Only update password if provided
         }
 
         const user = await User.findByIdAndUpdate(id, updatedFields, { new: true });
@@ -102,13 +119,12 @@ export const updateUser = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "No user found." });
         }
 
-        res.status(200).json(user);
+        res.status(200).json({ data: user });
     } catch (error) {
+        console.error("Error updating user:", error);
         res.status(500).json({ message: "Error updating user" });
     }
 };
-
-
 
 // Delete user
 export const deleteUser = async (req: Request, res: Response) => {
@@ -127,7 +143,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
 };
 
-// Login
+
 export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
@@ -145,8 +161,15 @@ export const login = async (req: Request, res: Response) => {
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
-        //added permission - permissions: user.permissions 
-        const token = jwt.sign({ id: user._id, permissions: user.permissions }, JWT_SECRET, { expiresIn: '1h' });
+
+        const token = jwt.sign(
+            {
+                id: user._id,
+                permissions: user.permissions, // Include permissions in the token payload
+            },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
 
         res.status(200).json({ message: 'Login successful', user, token });
     } catch (error) {
@@ -154,7 +177,6 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
-
 
 export const getCurrentUser = async (req: Request, res: Response) => {
     const authorizationHeader = req.headers.authorization;

@@ -10,7 +10,7 @@ import AddCartBtn from "@/ui/user/userMain/btn/AddCartBtn";
 import { useDebounce } from "use-debounce";
 import { Search } from "@mui/icons-material";
 import { TextField } from "@mui/material"; // Import TextField from Material-UI
-import withPermission from "@/auth/withPermission";
+//import withPermission from "@/auth/withPermission";
 
 interface MenuItem {
     _id: string;
@@ -154,5 +154,5 @@ const UsersFoodPage = () => {
     );
 };
 
-// export default UsersFoodPage;
-export default withPermission(UsersFoodPage, (['VIEW_RESTAURANTS']));
+export default UsersFoodPage;
+//export default withPermission(UsersFoodPage, (['VIEW_RESTAURANTS']));

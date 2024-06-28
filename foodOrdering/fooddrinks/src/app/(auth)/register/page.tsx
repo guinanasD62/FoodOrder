@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styles from '@/ui/auth/register/Register.module.css';
 
+type Role = 'adminAdmin' | 'admin' | 'user';
+
 interface User {
     name: string;
     email: string;
@@ -12,8 +14,8 @@ interface User {
     address: string;
     password: string;
     img?: string;
-    role: string;
-    permissions: string;
+    role: Role;
+    permissions: string[];
 }
 
 const Register: React.FC = () => {
@@ -24,8 +26,8 @@ const Register: React.FC = () => {
         phone: '',
         address: '',
         password: '',
-        role: 'user',
-        permissions: '',
+        role: 'user', // default role
+        permissions: [],
     });
     const [error, setError] = useState<string>('');
     const [errors, setErrors] = useState<Record<string, string>>({});
