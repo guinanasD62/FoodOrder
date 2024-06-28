@@ -44,7 +44,7 @@ export const generateToken = (userId: string, permissions: string): string => {
     if (!secret) {
         throw new Error('Missing JWT_SECRET in .env file');
     }
-    console.log('id--->', userId);
+    // console.log('id--->', userId);
     // permissions: permissions  console.log('permissions--->', permissions);
     return jwt.sign({ id: userId, permissions: permissions }, secret, { expiresIn: '1h' });
 };
@@ -96,7 +96,7 @@ export const auth = (roles: any = []) => {
 }
 
 
-// middleware/permissionCheck.js
+// middleware/permissionCheck.js important
 type Role = 'adminAdmin' | 'admin' | 'user';
 
 const rolePermissions: Record<Role, string[]> = {
@@ -118,9 +118,9 @@ const permissionCheck = (requiredPermissions: string[]) => {
         );
 
         console.log("user --->", User);
-
-        console.log("userPermissions --->", userPermissions);
         console.log("hasPermission --->", hasPermission);
+        console.log("userPermissions --->", userPermissions);
+
 
         if (!hasPermission) {
             return res.status(403).json({ message: "Forbiddennn" });

@@ -8,9 +8,9 @@ import { useRouter } from "next/navigation";
 import style from "@/ui/user/userMain/userFoodCard.module.css";
 import AddCartBtn from "@/ui/user/userMain/btn/AddCartBtn";
 import { useDebounce } from "use-debounce";
-import { Search } from "@mui/icons-material";
 import { TextField } from "@mui/material"; // Import TextField from Material-UI
-//import withPermission from "@/auth/withPermission";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store"; // Adjust the import path as needed
 
 interface MenuItem {
     _id: string;
@@ -39,10 +39,11 @@ const UsersFoodPage = () => {
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-    const [userId, setUserId] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>(""); // Add searchTerm and setSearchTerm
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500); // 500ms debounce
+    const [userId, setUserId] = useState<string | null>(null);
 
+    const token = useSelector((state: RootState) => state.session.token);
 
     useEffect(() => {
         const fetchMenuItems = async () => {
@@ -50,7 +51,9 @@ const UsersFoodPage = () => {
                 const response = await axios.get<{ data: MenuItem[] }>(
                     'http://localhost:3007/getmenus',
                     {
+                        //``
                         params: { search: debouncedSearchTerm },
+                        headers: { Authorization: `Bearer ${token}` }
                     }
                 );
 
@@ -68,12 +71,14 @@ const UsersFoodPage = () => {
             }
         };
         fetchMenuItems();
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, token]);
 
     useEffect(() => {
         const fetchRestaurants = async () => {
             try {
-                const response = await axios.get('http://localhost:3007/getrestaurants');
+                const response = await axios.get('http://localhost:3007/getrestaurants', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
                 console.log("Fetched restaurants:", response.data.data);
                 setRestaurants(response.data.data);
                 setLoading(false);
@@ -83,7 +88,7 @@ const UsersFoodPage = () => {
             }
         };
         fetchRestaurants();
-    }, []);
+    }, [token]);
 
     const getRestaurantName = (restaurantId: string) => {
         const restaurant = restaurants.find(resto => resto._id === restaurantId);
@@ -109,7 +114,6 @@ const UsersFoodPage = () => {
                 <h1>Restaurant Menus</h1>
 
                 <div>
-                    {/* <Search placeholder="Search for a menu ..." /> */}
                     <TextField
                         label="Search Food"
                         variant="outlined"
@@ -125,9 +129,8 @@ const UsersFoodPage = () => {
                             <h2 className={style.nameBanner}>{restaurant.name}</h2>
                             <div className={style.cardContainer}>
                                 {menuItems.filter(menuItem => menuItem.restaurant === restaurant._id).map((menuItem) => {
-                                    // const imageUrl = menuItem.img ? `http://localhost:3007/uploads/${menuItem.img}` : '/pizzas.png';
-                                    const imageUrl = '/pizzas.png';
-                                    console.log(`Image URL for ${menuItem.name}:`, imageUrl); // Add this line
+                                    const imageUrl = menuItem.img ? `http://localhost:3007/uploads/${menuItem.img}` : '/pizzas.png';
+                                    console.log(`Image URL for ${menuItem.name}:`, imageUrl);
                                     return (
                                         <div className={style.card} key={menuItem._id}>
                                             <img
@@ -135,7 +138,6 @@ const UsersFoodPage = () => {
                                                 alt={menuItem.name}
                                                 className={style.image}
                                             />
-                                            {/* <p>{menuItem.img}</p> */}
                                             <div className={style.content}>
                                                 <h2>{menuItem.name}</h2>
                                                 <p>{menuItem.description}</p>
@@ -155,4 +157,3 @@ const UsersFoodPage = () => {
 };
 
 export default UsersFoodPage;
-//export default withPermission(UsersFoodPage, (['VIEW_RESTAURANTS']));

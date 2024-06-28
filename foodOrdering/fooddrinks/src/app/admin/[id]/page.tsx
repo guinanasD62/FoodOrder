@@ -9,7 +9,7 @@ type Role = 'adminAdmin' | 'admin' | 'user';
 
 const rolePermissions: Record<Role, string[]> = {
     adminAdmin: ['ADD_RESTAURANT', 'VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT', 'DELETE_RESTAURANT'],
-    admin: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT'],
+    admin: ['ADD_RESTAURANT', 'VIEW_RESTAURANTS', 'VIEW_RESTAURANT', 'UPDATE_RESTAURANT'],
     user: ['VIEW_RESTAURANTS', 'VIEW_RESTAURANT']
 };
 

@@ -46,7 +46,7 @@ const LoginForm: React.FC = () => {
                         email: user.email,
                         role: user.role,
                         address: user.address,
-                        permissions: user.permissions, // Ensure permissions are correctly set
+                        permissions: user.permissions,
                     }
                 }));
 

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSelector } from 'react-redux'; // Import useSelector to access the Redux store
 import styles from '@/ui/restaurant/pages/Main/MainResto.module.css';
 import withRole from '@/auth/withRole';
 
@@ -26,11 +27,16 @@ const AdminRestaurants = () => {
     const [error, setError] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
     const router = useRouter();
+    const token = useSelector((state: any) => state.session.token); // Access the token from the Redux store
 
     useEffect(() => {
         const fetchRestaurants = async () => {
             try {
-                const response = await axios.get<{ data: Restaurant[] }>('http://localhost:3007/getrestaurants');
+                const response = await axios.get<{ data: Restaurant[] }>('http://localhost:3007/getrestaurants', {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include the token in the authorization header
+                    },
+                });
                 setRestaurant(response.data.data);
             } catch (error) {
                 setError('Failed to fetch restaurants');
@@ -40,11 +46,15 @@ const AdminRestaurants = () => {
         };
 
         fetchRestaurants();
-    }, []);
+    }, [token]);
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`http://localhost:3007/deleterestaurant/${id}`);
+            await axios.delete(`http://localhost:3007/deleterestaurant/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include the token in the authorization header
+                },
+            });
             setRestaurant(restaurant.filter(restaurant => restaurant._id !== id));
             alert("Restaurant deleted successfully");
         } catch (err) {
@@ -64,11 +74,12 @@ const AdminRestaurants = () => {
         }
     }, [restaurant, userId]);
 
-    // if (loading) return <div>Loading...</div>;
+    if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
     return (
-        <><RestoNavbar setUserId={setUserId} />
+        <>
+            <RestoNavbar setUserId={setUserId} />
 
             <div className={styles.adminContainer}>
                 <table className={styles.table}>
@@ -118,7 +129,8 @@ const AdminRestaurants = () => {
                         <button className={styles.addButton}>Add New Restaurant</button>
                     </Link>
                 </div>
-            </div></>
+            </div>
+        </>
     );
 };
 
