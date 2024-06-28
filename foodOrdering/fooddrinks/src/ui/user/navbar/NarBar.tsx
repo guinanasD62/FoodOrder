@@ -82,10 +82,10 @@ const Navbar: React.FC<RestoNavbarProps> = ({ setUserId }) => {
             <nav className={styles.containerNav}>
                 <div className={styles.userTitle}><Link href="/dashboard">Fooder</Link></div>
 
-
+                {/* 
                 <div>
                     <Search placeholder="Search for a menu ..." />
-                </div>
+                </div> */}
                 <ul className={styles.list}>
                     {/* <li><Link href="/customer/products" className={styles.containerCustomer}>Products</Link></li> */}
                     <li>

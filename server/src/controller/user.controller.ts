@@ -8,7 +8,7 @@ const JWT_SECRET = "mysecretkey";
 // Register user
 export const addUser = async (req: Request, res: Response) => {
     try {
-        const { name, email, img, phone, address, password, role, created_at } = req.body;
+        const { name, email, img, phone, address, password, role, permissions, created_at } = req.body;
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -20,6 +20,7 @@ export const addUser = async (req: Request, res: Response) => {
             address,
             password: hashedPassword,
             role,
+            permissions, // Include permissions here
             created_at
         });
 
@@ -144,8 +145,8 @@ export const login = async (req: Request, res: Response) => {
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
-
-        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        //added permission - permissions: user.permissions 
+        const token = jwt.sign({ id: user._id, permissions: user.permissions }, JWT_SECRET, { expiresIn: '1h' });
 
         res.status(200).json({ message: 'Login successful', user, token });
     } catch (error) {

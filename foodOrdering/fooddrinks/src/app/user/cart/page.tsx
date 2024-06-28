@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { clearCart, removeFromCart, selectCartItems, selectTotalAmount } from '@/redux/customerSlice/cartReducer';
-import { Box, Typography, Button, Paper, Grid } from '@mui/material';
+import { Box, Typography, Button, Paper, Grid, Divider, Avatar } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Navbar from '@/ui/user/navbar/NarBar';
+
 
 interface MenuOrder {
     _id: string;
@@ -22,6 +24,7 @@ const UserCart = () => {
 
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const [userId, setUserId] = useState<string | null>(null);
 
     console.log('Cart Items:', cartItems);
     console.log('Total Amount:', totalAmount);
@@ -113,47 +116,54 @@ const UserCart = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <Box p={2}>
-            <Typography variant="h4" gutterBottom>Your Cart</Typography>
-            {user && (
-                <Box mb={2}>
-                    <Typography>User: {user.name}</Typography>
-                    <Typography>Email: {user.email}</Typography>
-                    <Typography>Address: {user.address}</Typography>
-                    <Typography>ID: {user.id}</Typography>
-                </Box>
-            )}
-            <Box>
-                {cartItems.length > 0 ? (
-                    cartItems.map((item, index) => (
-                        <Paper key={index} elevation={2} sx={{ p: 2, mb: 2 }}>
-                            <Grid container spacing={2} alignItems="center">
-                                <Grid item xs={9}>
-                                    <Typography variant="h6">{item.menuItem.name}</Typography>
-                                    <Typography>Restaurant ID: {item.menuItem.restaurantId}</Typography>
-                                    <Typography>Menu ID: {item.menuItem.id}</Typography>
-                                    <Typography>Price: ${item.menuItem.price.toFixed(2)}</Typography>
-                                    <Typography>Quantity: {item.quantity}</Typography>
-                                </Grid>
-                                <Grid item xs={3} textAlign="right">
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={() => dispatch(removeFromCart(item.menuItem.id))}
-                                    >
-                                        Remove
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    ))
-                ) : (
-                    <Typography>No items in the cart</Typography>
+        <><Navbar setUserId={setUserId} />
+            <Box p={4} maxWidth="md" mx="auto" sx={{ borderRadius: 2, boxShadow: '0 4px 8px rgba(255, 0, 0, 0.2)' }}>
+                <Typography variant="h4" gutterBottom>Your Cart</Typography>
+                {user && (
+                    <Box mb={2} p={2} component={Paper} sx={{ backgroundColor: '#fff0f6', boxShadow: '0 4px 8px rgba(255, 0, 0, 0.2)' }}>
+                        <Typography variant="subtitle1">User: {user.name}</Typography>
+                        {/* <Typography variant="subtitle1">Email: {user.email}</Typography> */}
+                        <Typography variant="subtitle1">Address: {user.address}</Typography>
+                        {/* <Typography variant="subtitle1">ID: {user.id}</Typography> */}
+                    </Box>
                 )}
-                <Typography variant="h5">Total Amount: ${totalAmount.toFixed(2)}</Typography>
-                <Button variant="contained" sx={{ mr: 1 }} onClick={combinedClickHandler}>Place Order</Button>
-            </Box>
-        </Box>
+                <Box>
+                    {cartItems.length > 0 ? (
+                        cartItems.map((item, index) => (
+                            <Paper key={index} elevation={2} sx={{ p: 2, mb: 2, backgroundColor: '#fff0f6', boxShadow: '0 4px 8px rgba(255, 0, 0, 0.2)' }}>
+                                <Grid container spacing={2} alignItems="center">
+                                    <Grid item xs={2}>
+                                        <Avatar src="/pizzas.png" alt={item.menuItem.name} variant="square" sx={{ width: 56, height: 56 }} />
+                                    </Grid>
+                                    <Grid item xs={8}>
+                                        <Typography variant="h6">{item.menuItem.name}</Typography>
+                                        <Typography variant="body2">Restaurant ID: {item.menuItem.restaurantId}</Typography>
+                                        <Typography variant="body2">Menu ID: {item.menuItem.id}</Typography>
+                                        <Typography variant="body2">Price: ${item.menuItem.price.toFixed(2)}</Typography>
+                                        <Typography variant="body2">Quantity: {item.quantity}</Typography>
+                                    </Grid>
+                                    <Grid item xs={2} textAlign="right">
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() => dispatch(removeFromCart(item.menuItem.id))}
+                                        >
+                                            Remove
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        ))
+                    ) : (
+                        <Typography>No items in the cart</Typography>
+                    )}
+                    <Divider sx={{ my: 2 }} />
+                    <Typography variant="h5" align="right">Total Amount: ${totalAmount.toFixed(2)}</Typography>
+                    <Button variant="contained" color="primary" sx={{ mt: 2, boxShadow: '0 4px 8px rgba(255, 0, 0, 0.2)' }} onClick={combinedClickHandler}>
+                        Place Order
+                    </Button>
+                </Box>
+            </Box></>
     );
 };
 

@@ -4,6 +4,7 @@ interface User {
   id: string;
   email: string;
   role: 'adminAdmin' | 'admin' | 'user';
+  permissions: 'adminAdmin' | 'admin' | 'user';
   name: string;
   address: string;
 }
@@ -29,6 +30,7 @@ const sessionSlice = createSlice({
       state.user = action.payload.user;
       state.isAuthenticated = true;
       console.log('User logged in:', state.user);
+      console.log('token: -->', state.token);
     },
     clearSession(state) {
       state.token = null;

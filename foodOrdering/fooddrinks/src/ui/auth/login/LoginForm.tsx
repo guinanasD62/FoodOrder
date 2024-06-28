@@ -44,7 +44,9 @@ const LoginForm: React.FC = () => {
                         email: response.data.user.email,
                         role: response.data.user.role,
                         address: response.data.user.address,
+                        permissions: response.data.user.address,
                     }
+
                 }));
 
                 // Redirect based on role 

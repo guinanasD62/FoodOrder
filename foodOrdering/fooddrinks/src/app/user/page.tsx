@@ -2,19 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-import Slideshow from '@/ui/user/headBanner/UserMenu';
-import Navbar from '@/ui/user/navbar/NarBar';
-
+import Slideshow from "@/ui/user/headBanner/UserMenu";
+import Navbar from "@/ui/user/navbar/NarBar";
 import { useRouter } from "next/navigation";
-import style from '@/ui/user/userMain/userFoodCard.module.css';
-
-//import { Box, CircularProgress } from "@mui/material";
+import style from "@/ui/user/userMain/userFoodCard.module.css";
 import AddCartBtn from "@/ui/user/userMain/btn/AddCartBtn";
+import { useDebounce } from "use-debounce";
+import { Search } from "@mui/icons-material";
+import { TextField } from "@mui/material"; // Import TextField from Material-UI
+import withPermission from "@/auth/withPermission";
 
 interface MenuItem {
     _id: string;
-    id: string; // this is needed
+    id: string;
     name: string;
     description?: string;
     price: number;
@@ -40,12 +40,19 @@ const UsersFoodPage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
     const [userId, setUserId] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>(""); // Add searchTerm and setSearchTerm
+    const [debouncedSearchTerm] = useDebounce(searchTerm, 500); // 500ms debounce
+
 
     useEffect(() => {
         const fetchMenuItems = async () => {
             try {
-                const response = await axios.get('http://localhost:3007/getmenus');
-                console.log("Fetched menu items:", response.data.data);
+                const response = await axios.get<{ data: MenuItem[] }>(
+                    'http://localhost:3007/getmenus',
+                    {
+                        params: { search: debouncedSearchTerm },
+                    }
+                );
 
                 const fetchedMenuItems = response.data.data.map((item: any) => ({
                     ...item,
@@ -61,7 +68,7 @@ const UsersFoodPage = () => {
             }
         };
         fetchMenuItems();
-    }, []);
+    }, [debouncedSearchTerm]);
 
     useEffect(() => {
         const fetchRestaurants = async () => {
@@ -100,6 +107,18 @@ const UsersFoodPage = () => {
             <Slideshow />
             <div>
                 <h1>Restaurant Menus</h1>
+
+                <div>
+                    {/* <Search placeholder="Search for a menu ..." /> */}
+                    <TextField
+                        label="Search Food"
+                        variant="outlined"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        fullWidth
+                        style={{ marginBottom: "20px" }}
+                    />
+                </div>
                 <div className={style.gridContainer}>
                     {restaurants.map((restaurant) => (
                         <div className={style.restaurantContainer} key={restaurant._id}>
@@ -135,4 +154,5 @@ const UsersFoodPage = () => {
     );
 };
 
-export default UsersFoodPage;
+// export default UsersFoodPage;
+export default withPermission(UsersFoodPage, (['VIEW_RESTAURANTS']));

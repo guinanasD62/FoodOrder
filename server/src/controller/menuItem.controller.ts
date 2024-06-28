@@ -39,11 +39,17 @@ export const addMenu = async (req: Request, res: Response) => {
 
 
 // Get all menu items
-export const getAllMenu = async (req: Request, res: Response) => {
-    try {
 
-        const menu = await MenuModel.find();
-        return res.status(200).json({ data: menu });
+export const getAllMenu = async (req: Request, res: Response): Promise<Response<any>> => {
+    try {
+        const searchTerm = req.query.search as string;
+        const query = searchTerm
+            ? { name: { $regex: searchTerm, $options: "i" } }
+            : {};
+
+        const menus = await MenuModel.find(query);
+
+        return res.status(200).json({ data: menus });
     } catch (error) {
         console.log(error);
         return res.status(400).json({ message: "Error fetching menu items" });

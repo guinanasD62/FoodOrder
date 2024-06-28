@@ -3,9 +3,30 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '../model/user';
+import { Request, Response, NextFunction } from 'express';
 
 const JWT_SECRET = "mysecretkey"
 
+interface CustomRequest extends Request {
+    user?: {
+        permissions: string[];
+    };
+}
+
+export const Permissions = {
+    ADD_RESTAURANT: 'ADD_RESTAURANT',
+    VIEW_RESTAURANTS: 'VIEW_RESTAURANTS',
+    VIEW_RESTAURANT: 'VIEW_RESTAURANT',
+    UPDATE_RESTAURANT: 'UPDATE_RESTAURANT',
+    DELETE_RESTAURANT: 'DELETE_RESTAURANT',
+    // Add more permissions as needed
+} as const;
+
+interface CustomRequest extends Request {
+    user?: {
+        permissions: string[];
+    };
+}
 
 export const hashPassword = async (password: string): Promise<string> => {
     const salt = await bcrypt.genSalt(10);
@@ -18,11 +39,13 @@ export const comparePassword = async (candidatePassword: string, userPassword: s
 };
 
 
-export const generateToken = (userId: string): string => {
+export const generateToken = (userId: string, permissions: string): string => {
     const secret = JWT_SECRET;
     if (!secret) {
         throw new Error('Missing JWT_SECRET in .env file');
     }
+    console.log('id--->', userId);
+    // permissions: permissions  console.log('permissions--->', permissions);
     return jwt.sign({ id: userId }, secret, { expiresIn: '1h' });
 };
 
@@ -53,23 +76,73 @@ export const auth = (roles: any = []) => {
             // console.log('User data--->', userDta);
 
 
-            // if (!userDta) {
-            //     return res.status(401).json({ message: 'Not authorized' });
-            // }
+            if (!userDta) {
+                return res.status(401).json({ message: 'Not authorized' });
+            }
 
             if (roles.length && !roles.includes(userDta.role)) {
                 return res.status(403).json({ message: 'Forbidden' })
             }
-            console.log('User role authorized--->', userDta.role);
+
 
             req.user = userDta; // Attach user to request
+            console.log('User role authorized--->', userDta.role);
             next();
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Server error' });
+            res.status(500).json({ message: 'Server errorrr' });
         }
     }
 }
+
+// const permissionCheck = (requiredPermissions: any[]) => {
+//     return (req: Request, res: Response, next: NextFunction) => {
+//         if (!req.user || !req.user.permissions) {
+//             return res.status(403).json({ message: "Forbiddenn" });
+//         }
+
+//         const userPermissions = req.user.permissions;
+
+//         const hasPermission = requiredPermissions.every(permission =>
+//             userPermissions.includes(permission)
+//         );
+
+//         if (!hasPermission) {
+//             return res.status(403).json({ message: "Forbiddennn" });
+//         }
+
+//         next();
+//     };
+// };
+
+// export default permissionCheck;
+
+// middleware/permissionCheck.js
+
+const permissionCheck = (requiredPermissions: (keyof typeof Permissions)[]) => {
+    return (req: CustomRequest, res: Response, next: NextFunction) => {
+        if (!req.user || !req.user.permissions) {
+            return res.status(403).json({ message: "Forbiddenn" });
+        }
+
+        const userPermissions = req.user.permissions;
+
+        const hasPermission = requiredPermissions.every(permission =>
+            userPermissions.includes(permission)
+        );
+        console.log("userPermissions --->", userPermissions);
+
+        // if (!hasPermission) {
+
+        //     return res.status(403).json({ message: "Forbiddennn" });
+        // }
+
+        next();
+    };
+};
+
+export default permissionCheck;
+
 /**
 
 

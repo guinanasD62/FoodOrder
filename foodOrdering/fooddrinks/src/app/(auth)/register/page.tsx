@@ -13,6 +13,7 @@ interface User {
     password: string;
     img?: string;
     role: string;
+    permissions: string;
 }
 
 const Register: React.FC = () => {
@@ -24,6 +25,7 @@ const Register: React.FC = () => {
         address: '',
         password: '',
         role: 'user',
+        permissions: '',
     });
     const [error, setError] = useState<string>('');
     const [errors, setErrors] = useState<Record<string, string>>({});

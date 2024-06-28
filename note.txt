@@ -450,8 +450,10 @@ update redux cart reducer
 modify auth-context 
  Higher-Order Component (HOC) for Role-Based Route Protection
  Protect Specific Routes with the HOC
+ role base authentication
 Create an Unauthorized page
 
+search debouncer
 
  Sumala sa Salmo 55, siya hilabihang nahasol sa kabalaka tungod sa mga kapit-os ug pagkamabatokon sa iyang mga kaaway. Mibati siya ug tumang kaguol ug kahadlok. Makaagulo lamang siya sa iyang kasub-anan. (Salmo 55:2, 5, 17)
  
@@ -462,3 +464,11 @@ Create an Unauthorized page
 
 oct 29
 
+26/6/24
+https://chatgpt.com/c/f1d5b44b-dd74-40d0-b8ea-aaa636a76c5c
+
+27/6/24
+save all the permission on my token
+auth from the backend 
+
+28/6/24

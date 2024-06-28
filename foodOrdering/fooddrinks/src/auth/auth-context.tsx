@@ -10,8 +10,10 @@ type User = {
   id: string;
   email: string;
   role: 'adminAdmin' | 'admin' | 'user';
+  permissions: 'adminAdmin' | 'admin' | 'user';
   name: string;
   address: string;
+
 };
 
 
